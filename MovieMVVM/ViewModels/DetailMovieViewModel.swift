@@ -18,6 +18,9 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     var similarMovies: [SimilarMovie] = []
     var movie: Movie
     var posterPath = Constants.emptyText
+    var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)?
+    var similarPosterCompletion: ((Result<Data, Error>) -> Void)?
+    var mainPosterCompletion: ((Result<Data, Error>) -> Void)?
 
     // MARK: - Initializers
 
@@ -29,22 +32,25 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
 
     // MARK: - Public Methods
 
-    func fetchData(completion: @escaping ((Result<Data, Error>) -> Void)) {
-        imageService.loadImage(path: movie.posterPath, completion: completion)
+    func fetchMainPosterData() {
+        guard let mainPosterCompletion = mainPosterCompletion else { return }
+        imageService.loadImage(path: movie.posterPath, completion: mainPosterCompletion)
     }
 
-    func fetchPosterData(completion: @escaping ((Result<Data, Error>) -> Void)) {
-        imageService.loadImage(path: posterPath, completion: completion)
+    func fetchSimilarPosterData() {
+        guard let similarPosterCompletion = similarPosterCompletion else { return }
+        imageService.loadImage(path: posterPath, completion: similarPosterCompletion)
     }
 
-    func fetchSimilarMovies(completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {
+    func fetchSimilarMovies() {
+        guard let similarMoviesCompletion = similarMoviesCompletion else { return }
         networkService.fetchSimilarMovies(idMovie: movie.id) { result in
             switch result {
             case let .success(similarMovies):
                 self.similarMovies = similarMovies
-                completion(result)
+                similarMoviesCompletion(result)
             case .failure:
-                completion(result)
+                similarMoviesCompletion(result)
             }
         }
     }
@@ -52,5 +58,9 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     func setupPoster(index: Int) {
         guard index < similarMovies.count else { return }
         posterPath = similarMovies[index].posterPath
+    }
+
+    func setupSimilarPosterCompetion(completion: ((Result<Data, Error>) -> Void)?) {
+        similarPosterCompletion = completion
     }
 }

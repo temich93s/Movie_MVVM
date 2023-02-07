@@ -12,11 +12,15 @@ protocol DetailMovieViewModelProtocol {
     var similarMovies: [SimilarMovie] { get set }
     var movie: Movie { get set }
     var posterPath: String { get set }
+    var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)? { get set }
+    var similarPosterCompletion: ((Result<Data, Error>) -> Void)? { get set }
+    var mainPosterCompletion: ((Result<Data, Error>) -> Void)? { get set }
 
     // MARK: - Public Methods
 
-    func fetchData(completion: @escaping ((Result<Data, Error>) -> Void))
-    func fetchPosterData(completion: @escaping ((Result<Data, Error>) -> Void))
-    func fetchSimilarMovies(completion: @escaping ((Result<[SimilarMovie], Error>) -> Void))
+    func fetchMainPosterData()
+    func fetchSimilarPosterData()
+    func setupSimilarPosterCompetion(completion: ((Result<Data, Error>) -> Void)?)
+    func fetchSimilarMovies()
     func setupPoster(index: Int)
 }
