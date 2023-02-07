@@ -17,6 +17,7 @@ final class ListMoviesViewController: UIViewController {
         static let topRatedText = "Top Rated"
         static let upComingText = "Up Coming"
         static let movieTableViewCellText = "MovieTableViewCell"
+        static let fatalErrorText = "init(coder:) has not been implemented"
     }
 
     // MARK: - Private Visual Properties
@@ -108,7 +109,7 @@ final class ListMoviesViewController: UIViewController {
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.fatalErrorText)
     }
 
     // MARK: - Private Methods
