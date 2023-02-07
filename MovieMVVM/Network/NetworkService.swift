@@ -12,18 +12,17 @@ final class NetworkService: NetworkServiceProtocol {
         static let languageQueryText = "&language=ru-RU"
         static let pageQueryText = "&page=1"
         static let themoviedbQueryText = "https://api.themoviedb.org/3/movie/"
-        static let posterPathQueryText = "https://image.tmdb.org/t/p/w500"
-        static let firstPartURLText = "https://api.themoviedb.org/3/movie/"
-        static let secondPartURLText = "/similar?api_key=8216e974d625f2a458a739c20007dcd6&language=ru-RU&page=1"
+        static let similarQueryText = "/similar?"
         static let topRatedQueryText = "top_rated?"
         static let popularQueryText = "popular?"
         static let upcomingQueryText = "upcoming?"
+        static let emptyText = ""
     }
 
     // MARK: - Public Methods
 
     func fetchMovies(categoryMovies: CategoryMovies, completion: @escaping (Result<[Movie], Error>) -> Void) {
-        var currentCategoryMovies = ""
+        var currentCategoryMovies = Constants.emptyText
         switch categoryMovies {
         case .topRated:
             currentCategoryMovies = Constants.topRatedQueryText
@@ -55,7 +54,9 @@ final class NetworkService: NetworkServiceProtocol {
     }
 
     func fetchSimilarMovies(idMovie: Int, completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {
-        let urlString = "\(Constants.firstPartURLText)\(idMovie)\(Constants.secondPartURLText)"
+        let urlString =
+            "\(Constants.themoviedbQueryText)\(idMovie)\(Constants.similarQueryText)" +
+            "\(Constants.apiKeyQueryText)\(Constants.languageQueryText)\(Constants.pageQueryText)"
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             if error == nil {

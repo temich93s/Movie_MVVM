@@ -130,7 +130,7 @@
 				AA90512F299200590071405D /* Builders */,
 				AA905138299200ED0071405D /* Coordinators */,
 				AA90513F2992013F0071405D /* Enums */,
-				AA905142299201800071405D /* Services */,
+				AA905142299201800071405D /* Network */,
 				AA905147299201C60071405D /* ViewModels */,
 				AA4AF50E2906D19B00236B5C /* Models */,
 				AA4AF5092906B49300236B5C /* Views */,
@@ -196,13 +196,13 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
-		AA905142299201800071405D /* Services */ = {
+		AA905142299201800071405D /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				AA905143299201A10071405D /* NetworkServiceProtocol.swift */,
 				AA905145299201B20071405D /* NetworkService.swift */,
 			);
-			path = Services;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		AA905147299201C60071405D /* ViewModels */ = {
