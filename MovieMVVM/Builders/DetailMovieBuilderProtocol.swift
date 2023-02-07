@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Протокол билдера экрана с описанием фильма
+/// Протокол сборщика модулей экрана с описанием фильма
 protocol DetailMovieBuilderProtocol {
     // MARK: - Public Methods
 

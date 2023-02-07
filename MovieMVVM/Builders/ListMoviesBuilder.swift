@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Билдер экрана со списком фильмов
+/// Сборщик модулей экрана со списком фильмов
 final class ListMoviesBuilder: ListMoviesBuilderProtocol {
     // MARK: - Public Methods
 

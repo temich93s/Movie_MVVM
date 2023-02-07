@@ -5,19 +5,13 @@ import Foundation
 
 /// Вью-модель экрана с выбранным фильмом
 final class DetailMovieViewModel: DetailMovieViewModelProtocol {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let emptyText = ""
-    }
-
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol
     var imageService: LoadImageProtocol
     var similarMovies: [SimilarMovie] = []
     var movie: Movie
-    var posterPath = Constants.emptyText
+    var posterPath = ""
     var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)?
     var similarPosterCompletion: ((Result<Data, Error>) -> Void)?
     var mainPosterCompletion: ((Result<Data, Error>) -> Void)?
