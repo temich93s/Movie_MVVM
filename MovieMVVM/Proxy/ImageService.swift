@@ -5,7 +5,7 @@ import Foundation
 
 /// Сервис загрузки изображений
 final class ImageService: LoadImageProtocol {
-    // MARK: - Private Methods
+    // MARK: - Private Properties
 
     private var proxy: LoadImageProtocol
 
