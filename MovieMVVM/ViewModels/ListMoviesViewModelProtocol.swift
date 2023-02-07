@@ -12,10 +12,13 @@ protocol ListMoviesViewModelProtocol {
     var movies: [Movie] { get set }
     var movie: Movie? { get set }
     var currentCategoryMovies: CategoryMovies { get set }
+    var listMoviesState: ((ListMoviesState) -> ())? { get set }
 
     // MARK: - Public Methods
 
-    func fetchMovies(completion: @escaping ((Result<[Movie], Error>) -> Void))
+    func fetchMovies()
     func fetchData(completion: @escaping ((Result<Data, Error>) -> Void))
     func setupMovie(index: Int)
+    func makeRefresh()
+    func setupCategory(tag: Int)
 }

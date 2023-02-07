@@ -75,30 +75,15 @@ final class ListMoviesViewController: UIViewController {
     var listMoviesViewModel: ListMoviesViewModelProtocol
     var onFinishFlow: (() -> ())?
     var toDetailMovie: ((Movie) -> ())?
+    var listMoviesState: ListMoviesState = .initial {
+        didSet {
+            view.setNeedsLayout()
+        }
+    }
 
     // MARK: - Private Properties
 
     private lazy var buttons: [UIButton] = [popularButton, topRatedButton, upComingButton]
-    private lazy var completion: ((Result<[Movie], Error>) -> Void) = { [weak self] result in
-        guard let self = self else { return }
-        DispatchQueue.main.async {
-            switch result {
-            case .success:
-                self.mainActivityIndicatorView.stopAnimating()
-                self.mainActivityIndicatorView.isHidden = true
-                self.listMoviesTableView.reloadData()
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-
-    // MARK: - Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupView()
-    }
 
     // MARK: - Initializers
 
@@ -112,33 +97,48 @@ final class ListMoviesViewController: UIViewController {
         fatalError(Constants.fatalErrorText)
     }
 
-    // MARK: - Private Methods
+    // MARK: - Public Methods
 
-    @objc private func catedoryButtonAction(sender: UIButton) {
-        mainActivityIndicatorView.startAnimating()
-        mainActivityIndicatorView.isHidden = false
-        setupActiveButton(pressedButton: sender)
-        switch sender.tag {
-        case 0:
-            listMoviesViewModel.currentCategoryMovies = .popular
-            listMoviesViewModel.fetchMovies(completion: completion)
-        case 1:
-            listMoviesViewModel.currentCategoryMovies = .topRated
-            listMoviesViewModel.fetchMovies(completion: completion)
-        case 2:
-            listMoviesViewModel.currentCategoryMovies = .upcoming
-            listMoviesViewModel.fetchMovies(completion: completion)
-        default:
-            break
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        switch listMoviesState {
+        case .initial:
+            setupView()
+            listMoviesViewModel.fetchMovies()
+        case .loading:
+            listMoviesViewModel.fetchMovies()
+            mainActivityIndicatorView.startAnimating()
+            mainActivityIndicatorView.isHidden = false
+        case .success:
+            mainActivityIndicatorView.stopAnimating()
+            mainActivityIndicatorView.isHidden = true
+            listMoviesTableView.reloadData()
+        case .failure:
+            mainActivityIndicatorView.stopAnimating()
+            mainActivityIndicatorView.isHidden = true
         }
     }
 
+    // MARK: - Private Methods
+
+    @objc private func catedoryButtonAction(sender: UIButton) {
+        setupActiveButton(pressedButton: sender)
+        listMoviesViewModel.setupCategory(tag: sender.tag)
+    }
+
     @objc private func refreshAction() {
-        listMoviesViewModel.fetchMovies(completion: completion)
+        listMoviesViewModel.makeRefresh()
         refreshControl.endRefreshing()
     }
 
+    private func setupListMoviesState() {
+        listMoviesViewModel.listMoviesState = { [weak self] states in
+            self?.listMoviesState = states
+        }
+    }
+
     private func setupView() {
+        setupListMoviesState()
         title = Constants.moviesText
         listMoviesTableView.delegate = self
         listMoviesTableView.dataSource = self
@@ -146,7 +146,6 @@ final class ListMoviesViewController: UIViewController {
         addSubview()
         setupConstraint()
         setupRefreshControl()
-        listMoviesViewModel.fetchMovies(completion: completion)
     }
 
     private func addSubview() {
