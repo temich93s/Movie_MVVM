@@ -54,20 +54,6 @@ final class NetworkService: NetworkServiceProtocol {
         }.resume()
     }
 
-//    func setupImageFromURLImage(posterPath: String, completion: @escaping ((Result<Data, Error>) -> Void)) {
-//        guard let imageMovieNameURL = URL(string: "\(Constants.posterPathQueryText)\(posterPath)") else { return }
-//        DispatchQueue.global().async {
-//            do {
-//                let data = try Data(contentsOf: imageMovieNameURL)
-//                DispatchQueue.main.async {
-//                    completion(.success(data))
-//                }
-//            } catch {
-//                completion(.failure(error))
-//            }
-//        }
-//    }
-
     func fetchSimilarMovies(idMovie: Int, completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {
         let urlString = "\(Constants.firstPartURLText)\(idMovie)\(Constants.secondPartURLText)"
         guard let url = URL(string: urlString) else { return }
