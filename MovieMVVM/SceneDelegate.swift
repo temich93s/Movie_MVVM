@@ -3,19 +3,22 @@
 
 import UIKit
 
-// MARK: - SceneDelegate
-
+/// Сцена приложения
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    // MARK: - Public Properties
+
     var window: UIWindow?
+    var coordinator: ApplicationCoordinator?
+
+    // MARK: - Public Methods
 
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
-        let listMoviesViewController = ListMoviesViewController()
-        let mainNavigationController = UINavigationController(rootViewController: listMoviesViewController)
-        window?.rootViewController = mainNavigationController
-        window?.backgroundColor = UIColor.white
+        guard let window = window else { return }
+        coordinator = ApplicationCoordinator(window: window)
+        coordinator?.start()
     }
 }

@@ -75,12 +75,22 @@ final class MovieTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configureMovieTableViewCell(movie: Movie) {
+    func configure(listMoviesViewModel: ListMoviesViewModelProtocol) {
+        guard let movie = listMoviesViewModel.movie else { return }
         nameMovieLabel.text = movie.title
         descriptionMovieLabel.text = movie.overview
         dateMovieLabel.text = movie.releaseDate
         scoreMovieLabel.text = "\(movie.voteAverage)"
-        setupImageFromURLImage(posterPath: movie.posterPath)
+        imageMovieImageView.image = UIImage(named: Constants.placeholderImageText)
+        listMoviesViewModel.fetchData(dataCompletion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(data):
+                self.imageMovieImageView.image = UIImage(data: data)
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        })
     }
 
     // MARK: - Private Methods
@@ -90,20 +100,6 @@ final class MovieTableViewCell: UITableViewCell {
         selectionStyle = .none
         addSubview()
         setupConstraint()
-    }
-
-    private func setupImageFromURLImage(posterPath: String) {
-        imageMovieImageView.image = UIImage(named: Constants.placeholderImageText)
-        guard let imageMovieNameURL =
-            URL(string: "\(Constants.posterPathQueryText)\(posterPath)")
-        else { return }
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: imageMovieNameURL)
-            DispatchQueue.main.async {
-                guard let safeData = data else { return }
-                self.imageMovieImageView.image = UIImage(data: safeData)
-            }
-        }
     }
 
     private func addSubview() {

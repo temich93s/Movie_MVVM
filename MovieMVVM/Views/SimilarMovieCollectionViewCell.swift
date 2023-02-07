@@ -34,8 +34,16 @@ final class SimilarMovieCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func configureSimilarMovieCollectionViewCell(dataImage: Data) {
-        imageMovieImageView.image = UIImage(data: dataImage)
+    func configure(detailMovieViewModel: DetailMovieViewModelProtocol) {
+        detailMovieViewModel.fetchPosterData(dataPosterCompletion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(data):
+                self.imageMovieImageView.image = UIImage(data: data)
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        })
     }
 
     // MARK: - Private Methods

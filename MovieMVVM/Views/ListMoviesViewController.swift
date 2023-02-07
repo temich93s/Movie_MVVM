@@ -7,14 +7,6 @@ import UIKit
 
 /// Экран со списком фильмов
 final class ListMoviesViewController: UIViewController {
-    // MARK: - Enum
-
-    enum CurrentCategoryMovies {
-        case topRated
-        case popular
-        case upcoming
-    }
-
     // MARK: - Constants
 
     private enum Constants {
@@ -24,9 +16,6 @@ final class ListMoviesViewController: UIViewController {
         static let languageQueryText = "&language=ru-RU"
         static let pageQueryText = "&page=1"
         static let regionQueryText = "&region=ru"
-        static let topRatedQueryText = "top_rated?"
-        static let popularQueryText = "popular?"
-        static let upcomingQueryText = "upcoming?"
         static let themoviedbQueryText = "https://api.themoviedb.org/3/movie/"
         static let posterPathQueryText = "https://image.tmdb.org/t/p/w500"
         static let moviesText = "Movies"
@@ -86,19 +75,33 @@ final class ListMoviesViewController: UIViewController {
 
     private let refreshControl = UIRefreshControl()
 
+    // MARK: - Public Properties
+
+    var listMoviesViewModel: ListMoviesViewModelProtocol
+    var onFinishFlow: (() -> ())?
+    var toDetailMovie: ((Movie) -> ())?
+
     // MARK: - Private Properties
 
-    private var movies: [Movie]? = []
-
     private lazy var buttons: [UIButton] = [popularButton, topRatedButton, upComingButton]
-
-    private var currentCategoryMovies: CurrentCategoryMovies = .popular
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+
+    // MARK: - Initializers
+
+    init(listMovieViewModel: ListMoviesViewModel) {
+        listMoviesViewModel = listMovieViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Private Methods
@@ -109,40 +112,43 @@ final class ListMoviesViewController: UIViewController {
         setupActiveButton(pressedButton: sender)
         switch sender.tag {
         case 0:
-            currentCategoryMovies = .popular
-            fetchData(categoryMovies: Constants.popularQueryText)
+            listMoviesViewModel.currentCategoryMovies = .popular
         case 1:
-            currentCategoryMovies = .topRated
-            fetchData(categoryMovies: Constants.topRatedQueryText)
+            listMoviesViewModel.currentCategoryMovies = .topRated
         case 2:
-            currentCategoryMovies = .upcoming
-            fetchData(categoryMovies: Constants.upcomingQueryText)
+            listMoviesViewModel.currentCategoryMovies = .upcoming
         default:
             break
         }
     }
 
     @objc private func refreshAction() {
-        switch currentCategoryMovies {
-        case .popular:
-            fetchData(categoryMovies: Constants.popularQueryText)
-        case .topRated:
-            fetchData(categoryMovies: Constants.topRatedQueryText)
-        case .upcoming:
-            fetchData(categoryMovies: Constants.upcomingQueryText)
-        }
+        listMoviesViewModel.fetchMovies()
         refreshControl.endRefreshing()
     }
 
     private func setupView() {
         title = Constants.moviesText
-        fetchData(categoryMovies: Constants.popularQueryText)
         listMoviesTableView.delegate = self
         listMoviesTableView.dataSource = self
         listMoviesTableView.addSubview(refreshControl)
         addSubview()
         setupConstraint()
         setupRefreshControl()
+        listMoviesViewModel.networkServiceCompletion = { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.mainActivityIndicatorView.stopAnimating()
+                    self.mainActivityIndicatorView.isHidden = true
+                    self.listMoviesTableView.reloadData()
+                case let .failure(error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        listMoviesViewModel.fetchMovies()
     }
 
     private func addSubview() {
@@ -171,38 +177,6 @@ final class ListMoviesViewController: UIViewController {
             button.backgroundColor = UIColor(named: Constants.systemLightGrayColorName)
             guard button == pressedButton else { continue }
             pressedButton.backgroundColor = UIColor(named: Constants.systemPinkColorName)
-        }
-    }
-
-    private func fetchData(categoryMovies: String) {
-        let urlString =
-            "\(Constants.themoviedbQueryText)\(categoryMovies)\(Constants.apiKeyQueryText)" +
-            "\(Constants.languageQueryText)\(Constants.pageQueryText)\(Constants.pageQueryText)"
-        guard let url = URL(string: urlString) else { return }
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
-            if error == nil {
-                self.decodeData(data: data)
-                DispatchQueue.main.async {
-                    self.mainActivityIndicatorView.stopAnimating()
-                    self.mainActivityIndicatorView.isHidden = true
-                    self.listMoviesTableView.reloadData()
-                }
-            } else {
-                guard let safeError = error else { return }
-                print(safeError)
-            }
-        }
-        task.resume()
-    }
-
-    private func decodeData(data: Data?) {
-        let decoder = JSONDecoder()
-        guard let safeData = data else { return }
-        do {
-            let decodedData = try decoder.decode(MovieList.self, from: safeData)
-            movies = decodedData.movies
-        } catch {
-            print(error)
         }
     }
 
@@ -259,22 +233,21 @@ final class ListMoviesViewController: UIViewController {
 
 extension ListMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movies?.count ?? 0
+        listMoviesViewModel.movies.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
             let cell = tableView
-            .dequeueReusableCell(withIdentifier: Constants.movieTableViewCellText) as? MovieTableViewCell,
-            let safeMovies = movies
+            .dequeueReusableCell(withIdentifier: Constants.movieTableViewCellText) as? MovieTableViewCell
         else { return UITableViewCell() }
-        cell.configureMovieTableViewCell(movie: safeMovies[indexPath.row])
+        listMoviesViewModel.setupMovie(index: indexPath.row)
+        cell.configure(listMoviesViewModel: listMoviesViewModel)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let safeMovies = movies, indexPath.row < safeMovies.count else { return }
-        let currentMovieViewController = CurrentMovieViewController(movie: safeMovies[indexPath.row])
-        navigationController?.pushViewController(currentMovieViewController, animated: false)
+        guard indexPath.row < listMoviesViewModel.movies.count, let toDetailMovie = toDetailMovie else { return }
+        toDetailMovie(listMoviesViewModel.movies[indexPath.row])
     }
 }

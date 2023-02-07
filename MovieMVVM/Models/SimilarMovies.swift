@@ -3,22 +3,10 @@
 
 import Foundation
 
-// MARK: - SimilarMovies
-
-/// SimilarMovies: Похожие фильмы
-/// - results: список похожих фильмов
+/// Похожие фильмы
 struct SimilarMovies: Codable {
+    // MARK: - Public Properties
+
+    /// Список похожих фильмов
     let results: [SimilarMovie]
-}
-
-// MARK: - SimilarMovie
-
-/// SimilarMovie: похожий фильм
-/// - posterPath: постер похожего письма
-struct SimilarMovie: Codable {
-    let posterPath: String
-
-    enum CodingKeys: String, CodingKey {
-        case posterPath = "poster_path"
-    }
 }
