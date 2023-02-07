@@ -8,14 +8,9 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol
-    var networkServiceCompletion: ((Result<[Movie], Error>) -> Void)?
     var movies: [Movie] = []
     var movie: Movie?
-    var currentCategoryMovies: CategoryMovies = .popular {
-        didSet {
-            fetchMovies()
-        }
-    }
+    var currentCategoryMovies: CategoryMovies = .popular
 
     // MARK: - Initializers
 
@@ -25,22 +20,21 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     // MARK: - Public Methods
 
-    func fetchMovies() {
-        guard let networkServiceCompletion = networkServiceCompletion else { return }
+    func fetchMovies(completion: @escaping ((Result<[Movie], Error>) -> Void)) {
         networkService.fetchData(categoryMovies: currentCategoryMovies) { result in
             switch result {
             case let .success(movies):
                 self.movies = movies
-                networkServiceCompletion(result)
+                completion(result)
             case .failure:
-                networkServiceCompletion(result)
+                completion(result)
             }
         }
     }
 
-    func fetchData(dataCompletion: @escaping ((Result<Data, Error>) -> Void)) {
+    func fetchData(completion: @escaping ((Result<Data, Error>) -> Void)) {
         guard let movie = movie else { return }
-        networkService.setupImageFromURLImage(posterPath: movie.posterPath, completion: dataCompletion)
+        networkService.setupImageFromURLImage(posterPath: movie.posterPath, completion: completion)
     }
 
     func setupMovie(index: Int) {

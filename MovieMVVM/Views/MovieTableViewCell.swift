@@ -82,7 +82,7 @@ final class MovieTableViewCell: UITableViewCell {
         dateMovieLabel.text = movie.releaseDate
         scoreMovieLabel.text = "\(movie.voteAverage)"
         imageMovieImageView.image = UIImage(named: Constants.placeholderImageText)
-        listMoviesViewModel.fetchData(dataCompletion: { [weak self] result in
+        listMoviesViewModel.fetchData(completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(data):

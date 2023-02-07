@@ -84,6 +84,19 @@ final class ListMoviesViewController: UIViewController {
     // MARK: - Private Properties
 
     private lazy var buttons: [UIButton] = [popularButton, topRatedButton, upComingButton]
+    private lazy var completion: ((Result<[Movie], Error>) -> Void) = { [weak self] result in
+        guard let self = self else { return }
+        DispatchQueue.main.async {
+            switch result {
+            case .success:
+                self.mainActivityIndicatorView.stopAnimating()
+                self.mainActivityIndicatorView.isHidden = true
+                self.listMoviesTableView.reloadData()
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 
     // MARK: - Lifecycle
 
@@ -113,17 +126,20 @@ final class ListMoviesViewController: UIViewController {
         switch sender.tag {
         case 0:
             listMoviesViewModel.currentCategoryMovies = .popular
+            listMoviesViewModel.fetchMovies(completion: completion)
         case 1:
             listMoviesViewModel.currentCategoryMovies = .topRated
+            listMoviesViewModel.fetchMovies(completion: completion)
         case 2:
             listMoviesViewModel.currentCategoryMovies = .upcoming
+            listMoviesViewModel.fetchMovies(completion: completion)
         default:
             break
         }
     }
 
     @objc private func refreshAction() {
-        listMoviesViewModel.fetchMovies()
+        listMoviesViewModel.fetchMovies(completion: completion)
         refreshControl.endRefreshing()
     }
 
@@ -135,20 +151,7 @@ final class ListMoviesViewController: UIViewController {
         addSubview()
         setupConstraint()
         setupRefreshControl()
-        listMoviesViewModel.networkServiceCompletion = { [weak self] result in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    self.mainActivityIndicatorView.stopAnimating()
-                    self.mainActivityIndicatorView.isHidden = true
-                    self.listMoviesTableView.reloadData()
-                case let .failure(error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        listMoviesViewModel.fetchMovies()
+        listMoviesViewModel.fetchMovies(completion: completion)
     }
 
     private func addSubview() {
