@@ -8,6 +8,7 @@ protocol DetailMovieViewModelProtocol {
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol { get set }
+    var imageService: LoadImageProtocol { get set }
     var similarMovies: [SimilarMovie] { get set }
     var movie: Movie { get set }
     var posterPath: String { get set }

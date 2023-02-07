@@ -11,9 +11,6 @@ final class DetailMovieViewController: UIViewController {
 
     private enum Constants {
         static let overviewText = "Overview"
-        static let firstPartURLText = "https://api.themoviedb.org/3/movie/"
-        static let secondPartURLText = "/similar?api_key=8216e974d625f2a458a739c20007dcd6&language=ru-RU&page=1"
-        static let posterPathQueryText = "https://image.tmdb.org/t/p/w500"
         static let systemPinkColorName = "SystemPinkColor"
         static let releaseDataLabelText = "Релиз:"
         static let voteAverageLabelText = "Оценка:"

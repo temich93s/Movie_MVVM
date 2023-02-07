@@ -22,7 +22,7 @@ final class NetworkService: NetworkServiceProtocol {
 
     // MARK: - Public Methods
 
-    func fetchData(categoryMovies: CategoryMovies, completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func fetchMovies(categoryMovies: CategoryMovies, completion: @escaping (Result<[Movie], Error>) -> Void) {
         var currentCategoryMovies = ""
         switch categoryMovies {
         case .topRated:
@@ -54,19 +54,19 @@ final class NetworkService: NetworkServiceProtocol {
         }.resume()
     }
 
-    func setupImageFromURLImage(posterPath: String, completion: @escaping ((Result<Data, Error>) -> Void)) {
-        guard let imageMovieNameURL = URL(string: "\(Constants.posterPathQueryText)\(posterPath)") else { return }
-        DispatchQueue.global().async {
-            do {
-                let data = try Data(contentsOf: imageMovieNameURL)
-                DispatchQueue.main.async {
-                    completion(.success(data))
-                }
-            } catch {
-                completion(.failure(error))
-            }
-        }
-    }
+//    func setupImageFromURLImage(posterPath: String, completion: @escaping ((Result<Data, Error>) -> Void)) {
+//        guard let imageMovieNameURL = URL(string: "\(Constants.posterPathQueryText)\(posterPath)") else { return }
+//        DispatchQueue.global().async {
+//            do {
+//                let data = try Data(contentsOf: imageMovieNameURL)
+//                DispatchQueue.main.async {
+//                    completion(.success(data))
+//                }
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }
+//    }
 
     func fetchSimilarMovies(idMovie: Int, completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {
         let urlString = "\(Constants.firstPartURLText)\(idMovie)\(Constants.secondPartURLText)"

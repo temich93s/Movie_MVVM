@@ -14,7 +14,6 @@ final class MovieTableViewCell: UITableViewCell {
         static let systemWhiteColorName = "SystemWhiteColor"
         static let systemLightGrayColorName = "SystemLightGrayColor"
         static let fatalErrorText = "init(coder:) has not been implemented"
-        static let posterPathQueryText = "https://image.tmdb.org/t/p/w500"
         static let placeholderImageText = "PlaceholderImage"
     }
 

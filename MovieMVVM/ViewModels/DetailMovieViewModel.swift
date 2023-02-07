@@ -5,28 +5,36 @@ import Foundation
 
 /// Вью-модель экрана с выбранным фильмом
 final class DetailMovieViewModel: DetailMovieViewModelProtocol {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let emptyText = ""
+    }
+
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol
+    var imageService: LoadImageProtocol
     var similarMovies: [SimilarMovie] = []
     var movie: Movie
-    var posterPath = ""
+    var posterPath = Constants.emptyText
 
     // MARK: - Initializers
 
-    init(networkService: NetworkService, movie: Movie) {
+    init(networkService: NetworkService, imageService: LoadImageProtocol, movie: Movie) {
         self.networkService = networkService
+        self.imageService = imageService
         self.movie = movie
     }
 
     // MARK: - Public Methods
 
     func fetchData(completion: @escaping ((Result<Data, Error>) -> Void)) {
-        networkService.setupImageFromURLImage(posterPath: movie.posterPath, completion: completion)
+        imageService.loadImage(path: movie.posterPath, completion: completion)
     }
 
     func fetchPosterData(completion: @escaping ((Result<Data, Error>) -> Void)) {
-        networkService.setupImageFromURLImage(posterPath: posterPath, completion: completion)
+        imageService.loadImage(path: posterPath, completion: completion)
     }
 
     func fetchSimilarMovies(completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {

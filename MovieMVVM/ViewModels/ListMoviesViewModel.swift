@@ -23,7 +23,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
     // MARK: - Public Methods
 
     func fetchMovies(completion: @escaping ((Result<[Movie], Error>) -> Void)) {
-        networkService.fetchData(categoryMovies: currentCategoryMovies) { result in
+        networkService.fetchMovies(categoryMovies: currentCategoryMovies) { result in
             switch result {
             case let .success(movies):
                 self.movies = movies

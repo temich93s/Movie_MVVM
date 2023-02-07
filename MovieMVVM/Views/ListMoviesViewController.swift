@@ -12,12 +12,6 @@ final class ListMoviesViewController: UIViewController {
     private enum Constants {
         static let systemPinkColorName = "SystemPinkColor"
         static let systemLightGrayColorName = "SystemLightGrayColor"
-        static let apiKeyQueryText = "api_key=8216e974d625f2a458a739c20007dcd6"
-        static let languageQueryText = "&language=ru-RU"
-        static let pageQueryText = "&page=1"
-        static let regionQueryText = "&region=ru"
-        static let themoviedbQueryText = "https://api.themoviedb.org/3/movie/"
-        static let posterPathQueryText = "https://image.tmdb.org/t/p/w500"
         static let moviesText = "Movies"
         static let popularText = "Popular"
         static let topRatedText = "Top Rated"

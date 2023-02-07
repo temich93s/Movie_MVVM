@@ -9,7 +9,15 @@ final class DetailMovieBuilder: DetailMovieBuilderProtocol {
 
     func build(movie: Movie) -> UIViewController {
         let networkService = NetworkService()
-        let detailMovieViewModel = DetailMovieViewModel(networkService: networkService, movie: movie)
+        let fileManager = ImageFileManager()
+        let imageAPIService = ImageAPIService()
+        let proxy = Proxy(fileManager: fileManager, imageAPIService: imageAPIService)
+        let imageService = ImageService(proxy: proxy)
+        let detailMovieViewModel = DetailMovieViewModel(
+            networkService: networkService,
+            imageService: imageService,
+            movie: movie
+        )
         let detailMovieViewController = DetailMovieViewController(detailMovieViewModel: detailMovieViewModel)
         return detailMovieViewController
     }
