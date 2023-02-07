@@ -3,13 +3,15 @@
 
 import Foundation
 
-/// fff
+/// Сервис загрузки изображений из сети
 class ImageAPIService: LoadImageProtocol {
     // MARK: - Constants
 
     private enum Constants {
         static let posterPathQueryText = "https://image.tmdb.org/t/p/w500"
     }
+
+    // MARK: - Public Methods
 
     func loadImage(path: String, completion: @escaping ((Result<Data, Error>) -> Void)) {
         guard let url = URL(string: "\(Constants.posterPathQueryText)\(path)") else { return }
