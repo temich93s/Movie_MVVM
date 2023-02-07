@@ -4,7 +4,7 @@
 import Foundation
 
 /// Сервис загрузки изображений из сети
-class ImageAPIService: LoadImageProtocol {
+final class ImageAPIService: LoadImageProtocol {
     // MARK: - Constants
 
     private enum Constants {

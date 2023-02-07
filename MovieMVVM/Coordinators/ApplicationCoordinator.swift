@@ -4,7 +4,7 @@
 import UIKit
 
 /// Главный координатор
-class ApplicationCoordinator: BaseCoordinator {
+final class ApplicationCoordinator: BaseCoordinator {
     // MARK: - Public Methods
 
     override func start() {

@@ -45,12 +45,14 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     func fetchSimilarMovies() {
         guard let similarMoviesCompletion = similarMoviesCompletion else { return }
         networkService.fetchSimilarMovies(idMovie: movie.id) { result in
-            switch result {
-            case let .success(similarMovies):
-                self.similarMovies = similarMovies
-                similarMoviesCompletion(result)
-            case .failure:
-                similarMoviesCompletion(result)
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(similarMovies):
+                    self.similarMovies = similarMovies
+                    similarMoviesCompletion(result)
+                case .failure:
+                    similarMoviesCompletion(result)
+                }
             }
         }
     }

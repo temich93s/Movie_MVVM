@@ -4,7 +4,7 @@
 import Foundation
 
 /// Прокси загрузки изображений
-class Proxy: LoadImageProtocol {
+final class Proxy: LoadImageProtocol {
     // MARK: - Private Methods
 
     private var fileManager: ImageFileManager
