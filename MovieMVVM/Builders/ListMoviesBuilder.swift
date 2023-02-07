@@ -9,7 +9,11 @@ final class ListMoviesBuilder: ListMoviesBuilderProtocol {
 
     func build() -> UIViewController {
         let networkService = NetworkService()
-        let listMoviesViewModel = ListMoviesViewModel(networkService: networkService)
+        let fileManager = FileManager()
+        let imageAPIService = ImageAPIService()
+        let proxy = Proxy(fileManager: fileManager, imageAPIService: imageAPIService)
+        let imageService = ImageService(proxy: proxy)
+        let listMoviesViewModel = ListMoviesViewModel(networkService: networkService, imageService: imageService)
         let listMoviesViewController = ListMoviesViewController(listMovieViewModel: listMoviesViewModel)
         return listMoviesViewController
     }

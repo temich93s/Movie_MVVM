@@ -8,14 +8,16 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol
+    var imageService: LoadImageProtocol
     var movies: [Movie] = []
     var movie: Movie?
     var currentCategoryMovies: CategoryMovies = .popular
 
     // MARK: - Initializers
 
-    init(networkService: NetworkService) {
+    init(networkService: NetworkService, imageService: LoadImageProtocol) {
         self.networkService = networkService
+        self.imageService = imageService
     }
 
     // MARK: - Public Methods
@@ -34,7 +36,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     func fetchData(completion: @escaping ((Result<Data, Error>) -> Void)) {
         guard let movie = movie else { return }
-        networkService.setupImageFromURLImage(posterPath: movie.posterPath, completion: completion)
+        imageService.loadImage(path: movie.posterPath, completion: completion)
     }
 
     func setupMovie(index: Int) {
