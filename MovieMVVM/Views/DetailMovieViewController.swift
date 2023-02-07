@@ -18,6 +18,8 @@ final class DetailMovieViewController: UIViewController {
         static let similarMovieLabelText = "Похожие фильмы"
         static let similarMovieCollectionViewCellText = "SimilarMovieCollectionViewCell"
         static let fatalErrorText = "init(coder:) has not been implemented"
+        static let errorText = "Error"
+        static let okText = "OK"
     }
 
     // MARK: - Private Visual Properties
@@ -157,7 +159,11 @@ final class DetailMovieViewController: UIViewController {
             case let .success(data):
                 self.imageMovieImageView.image = UIImage(data: data)
             case let .failure(error):
-                print(error.localizedDescription)
+                self.showErrorAlert(
+                    alertTitle: Constants.errorText,
+                    message: error.localizedDescription,
+                    actionTitle: Constants.okText
+                )
             }
         }
         detailMovieViewModel.fetchMainPosterData()
@@ -172,7 +178,11 @@ final class DetailMovieViewController: UIViewController {
             case .success:
                 self.similarMovieCollectionView.reloadData()
             case let .failure(error):
-                print(error.localizedDescription)
+                self.showErrorAlert(
+                    alertTitle: Constants.errorText,
+                    message: error.localizedDescription,
+                    actionTitle: Constants.okText
+                )
             }
         }
         detailMovieViewModel.fetchSimilarMovies()
