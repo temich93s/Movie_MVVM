@@ -8,8 +8,6 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol
-    var dataCompletion: ((Result<Data, Error>) -> Void)?
-    var similarMovieCompletion: ((Result<[SimilarMovie], Error>) -> Void)?
     var similarMovies: [SimilarMovie] = []
     var movie: Movie
     var posterPath = ""
@@ -23,24 +21,22 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
 
     // MARK: - Public Methods
 
-    func fetchData() {
-        guard let dataCompletion = dataCompletion else { return }
-        networkService.setupImageFromURLImage(posterPath: movie.posterPath, completion: dataCompletion)
+    func fetchData(completion: @escaping ((Result<Data, Error>) -> Void)) {
+        networkService.setupImageFromURLImage(posterPath: movie.posterPath, completion: completion)
     }
 
-    func fetchPosterData(dataPosterCompletion: @escaping ((Result<Data, Error>) -> Void)) {
-        networkService.setupImageFromURLImage(posterPath: posterPath, completion: dataPosterCompletion)
+    func fetchPosterData(completion: @escaping ((Result<Data, Error>) -> Void)) {
+        networkService.setupImageFromURLImage(posterPath: posterPath, completion: completion)
     }
 
-    func fetchSimilarMovies() {
-        guard let similarMovieCompletion = similarMovieCompletion else { return }
+    func fetchSimilarMovies(completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {
         networkService.fetchSimilarMovies(idMovie: movie.id) { result in
             switch result {
             case let .success(similarMovies):
                 self.similarMovies = similarMovies
-                similarMovieCompletion(result)
+                completion(result)
             case .failure:
-                similarMovieCompletion(result)
+                completion(result)
             }
         }
     }

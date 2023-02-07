@@ -35,7 +35,7 @@ final class SimilarMovieCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Methods
 
     func configure(detailMovieViewModel: DetailMovieViewModelProtocol) {
-        detailMovieViewModel.fetchPosterData(dataPosterCompletion: { [weak self] result in
+        detailMovieViewModel.fetchPosterData(completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(data):

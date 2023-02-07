@@ -154,7 +154,7 @@ final class DetailMovieViewController: UIViewController {
     // MARK: - Private Methods
 
     private func initView() {
-        detailMovieViewModel.dataCompletion = { [weak self] result in
+        detailMovieViewModel.fetchData { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(data):
@@ -163,13 +163,12 @@ final class DetailMovieViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        detailMovieViewModel.fetchData()
         titleMovieLabel.text = detailMovieViewModel.movie.title
         releaseDataValueLabel.text = detailMovieViewModel.movie.releaseDate
         voteAverageValueLabel.text = "\(detailMovieViewModel.movie.voteAverage)"
         voteCountValueLabel.text = "\(detailMovieViewModel.movie.voteCount)"
         overviewMovieLabel.text = detailMovieViewModel.movie.overview
-        detailMovieViewModel.similarMovieCompletion = { [weak self] result in
+        detailMovieViewModel.fetchSimilarMovies(completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:
@@ -177,8 +176,7 @@ final class DetailMovieViewController: UIViewController {
             case let .failure(error):
                 print(error.localizedDescription)
             }
-        }
-        detailMovieViewModel.fetchSimilarMovies()
+        })
     }
 
     private func setupView() {
