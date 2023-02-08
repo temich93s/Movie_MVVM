@@ -20,6 +20,8 @@ final class DetailMovieViewController: UIViewController {
         static let fatalErrorText = "init(coder:) has not been implemented"
         static let errorText = "Error"
         static let okText = "OK"
+        static let heightCoefficientNumber: CGFloat = 2 / 3
+        static let twoNumber = 2
     }
 
     // MARK: - Private Visual Properties
@@ -172,20 +174,7 @@ final class DetailMovieViewController: UIViewController {
         voteAverageValueLabel.text = "\(detailMovieViewModel.movie.voteAverage)"
         voteCountValueLabel.text = "\(detailMovieViewModel.movie.voteCount)"
         overviewMovieLabel.text = detailMovieViewModel.movie.overview
-        detailMovieViewModel.similarMoviesCompletion = { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                self.similarMovieCollectionView.reloadData()
-            case let .failure(error):
-                self.showErrorAlert(
-                    alertTitle: Constants.errorText,
-                    message: error.localizedDescription,
-                    actionTitle: Constants.okText
-                )
-            }
-        }
-        detailMovieViewModel.fetchSimilarMovies()
+        setupSimilarMovies()
     }
 
     private func setupView() {
@@ -249,6 +238,23 @@ final class DetailMovieViewController: UIViewController {
             applicationActivities: nil
         )
         present(safeActivityVC, animated: true, completion: nil)
+    }
+
+    private func setupSimilarMovies() {
+        detailMovieViewModel.similarMoviesCompletion = { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.similarMovieCollectionView.reloadData()
+            case let .failure(error):
+                self.showErrorAlert(
+                    alertTitle: Constants.errorText,
+                    message: error.localizedDescription,
+                    actionTitle: Constants.okText
+                )
+            }
+        }
+        detailMovieViewModel.fetchSimilarMovies()
     }
 
     private func createImageMovieImageViewConstraint() {
@@ -393,7 +399,8 @@ extension DetailMovieViewController: UICollectionViewDelegate, UICollectionViewD
             mainActivityIndicatorView.isHidden = true
         }
         heightSimilarMovieCollectionView.constant =
-            similarMovieCollectionView.frame.width * 2 / 3 * CGFloat(detailMovieViewModel.similarMovies.count / 2)
+            similarMovieCollectionView.frame.width * Constants.heightCoefficientNumber *
+            CGFloat(detailMovieViewModel.similarMovies.count / Constants.twoNumber)
         heightSimilarMovieCollectionView.isActive = true
         return detailMovieViewModel.similarMovies.count
     }
