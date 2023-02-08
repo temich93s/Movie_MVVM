@@ -23,7 +23,8 @@ final class Proxy: ImageServiceProtocol {
         if let cacheDate = fileManager.loadImageData(path: path) {
             completion(Result.success(cacheDate))
         } else {
-            imageAPIService.loadImage(path: path) { result in
+            imageAPIService.loadImage(path: path) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case let .success(data):
                     self.fileManager.saveImageData(path: path, data: data)

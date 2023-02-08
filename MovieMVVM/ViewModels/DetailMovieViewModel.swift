@@ -7,14 +7,17 @@ import Foundation
 final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     // MARK: - Public Properties
 
-    var networkService: NetworkServiceProtocol
-    var imageService: ImageServiceProtocol
     var similarMovies: [SimilarMovie] = []
     var movie: Movie
     var posterPath = ""
     var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)?
     var similarPosterCompletion: ((Result<Data, Error>) -> Void)?
     var mainPosterCompletion: ((Result<Data, Error>) -> Void)?
+
+    // MARK: - Private Properties
+
+    private var networkService: NetworkServiceProtocol
+    private var imageService: ImageServiceProtocol
 
     // MARK: - Initializers
 
