@@ -9,7 +9,7 @@ final class DetailMovieBuilder: DetailMovieBuilderProtocol {
 
     func build(movie: Movie) -> UIViewController {
         let networkService = NetworkService()
-        let fileManager = ImageFileManager()
+        let fileManager = FileManagerService()
         let imageAPIService = ImageAPIService()
         let proxy = Proxy(fileManager: fileManager, imageAPIService: imageAPIService)
         let imageService = ImageService(proxy: proxy)

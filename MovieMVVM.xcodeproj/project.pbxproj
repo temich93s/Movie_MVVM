@@ -36,7 +36,7 @@
 		AA905159299207900071405D /* LoadImageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA905158299207900071405D /* LoadImageProtocol.swift */; };
 		AA90515B299207CD0071405D /* ImageAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90515A299207CD0071405D /* ImageAPIService.swift */; };
 		AA90515D299208210071405D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90515C299208210071405D /* ImageService.swift */; };
-		AA90515F299209BD0071405D /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90515E299209BD0071405D /* ImageFileManager.swift */; };
+		AA90515F299209BD0071405D /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90515E299209BD0071405D /* FileManagerService.swift */; };
 		AA905161299244920071405D /* ListMoviesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA905160299244920071405D /* ListMoviesState.swift */; };
 		AA90516429925A2F0071405D /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90516329925A2F0071405D /* UIViewController+Extension.swift */; };
 		AAAD6AAF290958CB009C9672 /* SimilarMovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAD6AAE290958CB009C9672 /* SimilarMovieCollectionViewCell.swift */; };
@@ -88,7 +88,7 @@
 		AA905158299207900071405D /* LoadImageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageProtocol.swift; sourceTree = "<group>"; };
 		AA90515A299207CD0071405D /* ImageAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPIService.swift; sourceTree = "<group>"; };
 		AA90515C299208210071405D /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
-		AA90515E299209BD0071405D /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
+		AA90515E299209BD0071405D /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		AA905160299244920071405D /* ListMoviesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoviesState.swift; sourceTree = "<group>"; };
 		AA90516329925A2F0071405D /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		AAAD6AAE290958CB009C9672 /* SimilarMovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMovieCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 				AA90515C299208210071405D /* ImageService.swift */,
 				AA9051562992072D0071405D /* Proxy.swift */,
 				AA90515A299207CD0071405D /* ImageAPIService.swift */,
-				AA90515E299209BD0071405D /* ImageFileManager.swift */,
+				AA90515E299209BD0071405D /* FileManagerService.swift */,
 			);
 			path = Proxy;
 			sourceTree = "<group>";
@@ -362,7 +362,7 @@
 				AA905161299244920071405D /* ListMoviesState.swift in Sources */,
 				AA90516429925A2F0071405D /* UIViewController+Extension.swift in Sources */,
 				AA905144299201A10071405D /* NetworkServiceProtocol.swift in Sources */,
-				AA90515F299209BD0071405D /* ImageFileManager.swift in Sources */,
+				AA90515F299209BD0071405D /* FileManagerService.swift in Sources */,
 				AA9051332992007C0071405D /* DetailMovieBuilderProtocol.swift in Sources */,
 				AA90514B299201E20071405D /* ListMoviesViewModelProtocol.swift in Sources */,
 				AA90515D299208210071405D /* ImageService.swift in Sources */,

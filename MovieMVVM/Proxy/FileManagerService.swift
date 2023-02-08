@@ -1,16 +1,10 @@
-// ImageFileManager.swift
+// FileManagerService.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
-/// Файловый менеджер изображений
-final class ImageFileManager {
-    // MARK: - Constants
-
-    private enum Constants {
-        static let folderName = "Images"
-    }
-
+/// Сервис файлового менеджера
+final class FileManagerService {
     // MARK: - Public Methods
 
     func loadImageData(path: String) -> Data? {
@@ -30,15 +24,6 @@ final class ImageFileManager {
     private func makeImagePath(path: String) -> String? {
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         else { return nil }
-        let folderUrl = documentDirectory.appendingPathComponent(Constants.folderName, isDirectory: true)
-        if !FileManager.default.fileExists(atPath: folderUrl.path) {
-            do {
-                try FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true)
-            } catch {
-                print(error.localizedDescription)
-                return nil
-            }
-        }
-        return folderUrl.appendingPathComponent(path).path
+        return documentDirectory.appendingPathComponent(path).path
     }
 }
