@@ -8,5 +8,5 @@ enum ListMoviesState {
     case initial
     case loading
     case success
-    case failure
+    case failure(Error)
 }

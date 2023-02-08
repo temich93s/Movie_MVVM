@@ -18,6 +18,8 @@ final class ListMoviesViewController: UIViewController {
         static let upComingText = "Up Coming"
         static let movieTableViewCellText = "MovieTableViewCell"
         static let fatalErrorText = "init(coder:) has not been implemented"
+        static let errorText = "Error"
+        static let okText = "OK"
     }
 
     // MARK: - Private Visual Properties
@@ -112,9 +114,14 @@ final class ListMoviesViewController: UIViewController {
             mainActivityIndicatorView.stopAnimating()
             mainActivityIndicatorView.isHidden = true
             listMoviesTableView.reloadData()
-        case .failure:
+        case let .failure(error):
             mainActivityIndicatorView.stopAnimating()
             mainActivityIndicatorView.isHidden = true
+            showErrorAlert(
+                alertTitle: Constants.errorText,
+                message: error.localizedDescription,
+                actionTitle: Constants.okText
+            )
         }
     }
 

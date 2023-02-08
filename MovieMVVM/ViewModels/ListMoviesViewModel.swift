@@ -40,8 +40,8 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
             case let .success(movies):
                 self.movies = movies
                 self.listMoviesState?(.success)
-            case .failure:
-                self.listMoviesState?(.failure)
+            case let .failure(error):
+                self.listMoviesState?(.failure(error))
             }
         }
     }
