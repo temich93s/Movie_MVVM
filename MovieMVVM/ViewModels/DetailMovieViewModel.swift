@@ -41,7 +41,8 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
 
     func fetchSimilarMovies() {
         guard let similarMoviesCompletion = similarMoviesCompletion else { return }
-        networkService.fetchSimilarMovies(idMovie: movie.id) { result in
+        networkService.fetchSimilarMovies(idMovie: movie.id) { [weak self] result in
+            guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case let .success(similarMovies):

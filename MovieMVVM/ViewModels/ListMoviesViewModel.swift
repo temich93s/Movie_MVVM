@@ -7,12 +7,15 @@ import Foundation
 final class ListMoviesViewModel: ListMoviesViewModelProtocol {
     // MARK: - Public Properties
 
-    var networkService: NetworkServiceProtocol
-    var imageService: ImageServiceProtocol
     var movies: [Movie] = []
     var movie: Movie?
     var currentCategoryMovies: CategoryMovies = .popular
     var listMoviesState: ((ListMoviesState) -> ())?
+
+    // MARK: - Private Properties
+
+    var networkService: NetworkServiceProtocol
+    var imageService: ImageServiceProtocol
 
     // MARK: - Initializers
 

@@ -7,8 +7,6 @@ import Foundation
 protocol ListMoviesViewModelProtocol {
     // MARK: - Public Properties
 
-    var networkService: NetworkServiceProtocol { get set }
-    var imageService: ImageServiceProtocol { get set }
     var movies: [Movie] { get set }
     var movie: Movie? { get set }
     var currentCategoryMovies: CategoryMovies { get set }
