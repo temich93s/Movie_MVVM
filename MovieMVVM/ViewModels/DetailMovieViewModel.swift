@@ -8,7 +8,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol
-    var imageService: LoadImageProtocol
+    var imageService: ImageServiceProtocol
     var similarMovies: [SimilarMovie] = []
     var movie: Movie
     var posterPath = ""
@@ -18,7 +18,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
 
     // MARK: - Initializers
 
-    init(networkService: NetworkService, imageService: LoadImageProtocol, movie: Movie) {
+    init(networkService: NetworkService, imageService: ImageServiceProtocol, movie: Movie) {
         self.networkService = networkService
         self.imageService = imageService
         self.movie = movie

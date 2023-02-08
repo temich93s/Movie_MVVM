@@ -4,15 +4,15 @@
 import Foundation
 
 /// Прокси загрузки изображений
-final class Proxy: LoadImageProtocol {
+final class Proxy: ImageServiceProtocol {
     // MARK: - Private Methods
 
     private var fileManager: FileManagerService
-    private var imageAPIService: LoadImageProtocol
+    private var imageAPIService: ImageAPIServiceProtocol
 
     // MARK: - Initializers
 
-    init(fileManager: FileManagerService, imageAPIService: LoadImageProtocol) {
+    init(fileManager: FileManagerService, imageAPIService: ImageAPIServiceProtocol) {
         self.fileManager = fileManager
         self.imageAPIService = imageAPIService
     }

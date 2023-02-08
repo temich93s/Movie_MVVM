@@ -8,7 +8,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
     // MARK: - Public Properties
 
     var networkService: NetworkServiceProtocol
-    var imageService: LoadImageProtocol
+    var imageService: ImageServiceProtocol
     var movies: [Movie] = []
     var movie: Movie?
     var currentCategoryMovies: CategoryMovies = .popular
@@ -16,7 +16,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     // MARK: - Initializers
 
-    init(networkService: NetworkService, imageService: LoadImageProtocol) {
+    init(networkService: NetworkService, imageService: ImageServiceProtocol) {
         self.networkService = networkService
         self.imageService = imageService
     }

@@ -4,14 +4,14 @@
 import Foundation
 
 /// Сервис загрузки изображений
-final class ImageService: LoadImageProtocol {
+final class ImageService: ImageServiceProtocol {
     // MARK: - Private Properties
 
-    private var proxy: LoadImageProtocol
+    private var proxy: ImageServiceProtocol
 
     // MARK: - Initializers
 
-    init(proxy: LoadImageProtocol) {
+    init(proxy: ImageServiceProtocol) {
         self.proxy = proxy
     }
 
