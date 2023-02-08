@@ -19,6 +19,5 @@ protocol ListMoviesViewModelProtocol {
     func fetchMovies()
     func fetchData(completion: @escaping ((Result<Data, Error>) -> Void))
     func setupMovie(index: Int)
-    func makeRefresh()
     func setupCategory(tag: Int)
 }

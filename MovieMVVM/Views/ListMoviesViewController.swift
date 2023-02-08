@@ -89,6 +89,7 @@ final class ListMoviesViewController: UIViewController {
 
     init(listMovieViewModel: ListMoviesViewModel) {
         listMoviesViewModel = listMovieViewModel
+        listMoviesViewModel.fetchMovies()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -104,9 +105,7 @@ final class ListMoviesViewController: UIViewController {
         switch listMoviesState {
         case .initial:
             setupView()
-            listMoviesViewModel.fetchMovies()
         case .loading:
-            listMoviesViewModel.fetchMovies()
             mainActivityIndicatorView.startAnimating()
             mainActivityIndicatorView.isHidden = false
         case .success:
@@ -127,7 +126,7 @@ final class ListMoviesViewController: UIViewController {
     }
 
     @objc private func refreshAction() {
-        listMoviesViewModel.makeRefresh()
+        listMoviesViewModel.fetchMovies()
         refreshControl.endRefreshing()
     }
 

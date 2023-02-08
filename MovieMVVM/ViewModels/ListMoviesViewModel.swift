@@ -33,10 +33,6 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
         movie = movies[index]
     }
 
-    func makeRefresh() {
-        listMoviesState?(.loading)
-    }
-
     func fetchMovies() {
         listMoviesState?(.loading)
         networkService.fetchMovies(categoryMovies: currentCategoryMovies) { result in
@@ -61,7 +57,6 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
         default:
             break
         }
-        listMoviesState?(.loading)
         fetchMovies()
     }
 }
