@@ -12,8 +12,8 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     // MARK: - Private Properties
 
-    var networkService: NetworkServiceProtocol
-    var imageService: ImageServiceProtocol
+    private var networkService: NetworkServiceProtocol
+    private var imageService: ImageServiceProtocol
 
     // MARK: - Initializers
 
