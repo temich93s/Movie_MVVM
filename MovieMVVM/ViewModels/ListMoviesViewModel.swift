@@ -38,7 +38,8 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     func fetchMovies() {
         listMoviesState?(.loading)
-        networkService.fetchMovies(categoryMovies: currentCategoryMovies) { result in
+        networkService.fetchMovies(categoryMovies: currentCategoryMovies) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .success(movies):
                 self.movies = movies

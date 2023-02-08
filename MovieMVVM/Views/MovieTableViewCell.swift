@@ -86,8 +86,8 @@ final class MovieTableViewCell: UITableViewCell {
             switch result {
             case let .success(data):
                 self.imageMovieImageView.image = UIImage(data: data)
-            case let .failure(error):
-                print(error.localizedDescription)
+            case .failure:
+                self.imageMovieImageView.image = UIImage(named: Constants.placeholderImageText)
             }
         })
     }
