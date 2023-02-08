@@ -1,5 +1,5 @@
 // ListMoviesViewModel.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import Foundation
 
@@ -9,6 +9,10 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     var currentCategoryMovies: CategoryMovies = .popular
     var listMoviesState: ((ListMoviesState<Movie>) -> ())?
+
+    var coreDataService = CoreDataService()
+    var keychainService = KeychainService()
+    var uploadApiKeyCompletion: (() -> ())?
 
     // MARK: - Private Properties
 
@@ -30,15 +34,32 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     func fetchMovies() {
         listMoviesState?(.loading)
+        if let coreDataMovies = coreDataService.getData(category: currentCategoryMovies) {
+            listMoviesState?(.success(coreDataMovies))
+        }
         networkService.fetchMovies(categoryMovies: currentCategoryMovies) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(movies):
+                self.coreDataService.saveData(category: self.currentCategoryMovies, movies: movies)
                 self.listMoviesState?(.success(movies))
             case let .failure(error):
                 self.listMoviesState?(.failure(error))
             }
         }
+    }
+
+    func checkApiKey() {
+        guard let apiKey = keychainService.get(forKey: .apiKey) else {
+            uploadApiKeyCompletion?()
+            return
+        }
+        // networkService?.setupAPIKey(apiKey)
+        print(apiKey)
+    }
+
+    func uploadApiKey(_ key: String) {
+        keychainService.save(key, forKey: .apiKey)
     }
 
     func setupCategory(tag: Int) {

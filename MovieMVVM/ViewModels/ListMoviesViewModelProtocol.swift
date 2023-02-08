@@ -1,5 +1,5 @@
 // ListMoviesViewModelProtocol.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import Foundation
 
@@ -9,10 +9,13 @@ protocol ListMoviesViewModelProtocol {
 
     var currentCategoryMovies: CategoryMovies { get set }
     var listMoviesState: ((ListMoviesState<Movie>) -> ())? { get set }
+    var uploadApiKeyCompletion: (() -> ())? { get set }
 
     // MARK: - Public Methods
 
     func fetchMovies()
     func fetchData(movie: Movie, completion: @escaping ((Result<Data, Error>) -> Void))
     func setupCategory(tag: Int)
+    func uploadApiKey(_ key: String)
+    func checkApiKey()
 }

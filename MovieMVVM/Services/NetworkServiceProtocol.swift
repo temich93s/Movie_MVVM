@@ -1,5 +1,5 @@
 // NetworkServiceProtocol.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import Foundation
 

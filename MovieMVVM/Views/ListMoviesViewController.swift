@@ -1,5 +1,5 @@
 // ListMoviesViewController.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import UIKit
 
@@ -20,6 +20,8 @@ final class ListMoviesViewController: UIViewController {
         static let fatalErrorText = "init(coder:) has not been implemented"
         static let errorText = "Error"
         static let okText = "OK"
+        static let apiTitleText = "Ключ API"
+        static let apiMessageText = "Введите ключ API"
     }
 
     // MARK: - Private Visual Properties
@@ -93,6 +95,17 @@ final class ListMoviesViewController: UIViewController {
         listMoviesViewModel = listMovieViewModel
         listMoviesViewModel.fetchMovies()
         super.init(nibName: nil, bundle: nil)
+        listMoviesViewModel.uploadApiKeyCompletion = { [weak self] in
+            guard let self = self else { return }
+            self.showAlert(
+                title: Constants.apiTitleText,
+                message: Constants.apiMessageText,
+                actionTitle: Constants.okText
+            ) { key in
+                self.listMoviesViewModel.uploadApiKey(key)
+                print(key)
+            }
+        }
     }
 
     @available(*, unavailable)
@@ -107,6 +120,7 @@ final class ListMoviesViewController: UIViewController {
         switch props {
         case .initial:
             setupView()
+            listMoviesViewModel.checkApiKey()
         case .loading:
             mainActivityIndicatorView.startAnimating()
             mainActivityIndicatorView.isHidden = false
