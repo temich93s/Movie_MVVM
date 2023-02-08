@@ -7,15 +7,12 @@ import Foundation
 protocol ListMoviesViewModelProtocol {
     // MARK: - Public Properties
 
-    var movies: [Movie] { get set }
-    var movie: Movie? { get set }
     var currentCategoryMovies: CategoryMovies { get set }
-    var listMoviesState: ((ListMoviesState) -> ())? { get set }
+    var listMoviesState: ((ListMoviesState<Movie>) -> ())? { get set }
 
     // MARK: - Public Methods
 
     func fetchMovies()
-    func fetchData(completion: @escaping ((Result<Data, Error>) -> Void))
-    func setupMovie(index: Int)
+    func fetchData(movie: Movie, completion: @escaping ((Result<Data, Error>) -> Void))
     func setupCategory(tag: Int)
 }

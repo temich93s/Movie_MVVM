@@ -77,7 +77,7 @@ final class ListMoviesViewController: UIViewController {
     var listMoviesViewModel: ListMoviesViewModelProtocol
     var onFinishFlow: VoidHandler?
     var toDetailMovie: ((Movie) -> ())?
-    var listMoviesState: ListMoviesState = .initial {
+    var props: ListMoviesState<Movie> = .initial {
         didSet {
             view.setNeedsLayout()
         }
@@ -104,7 +104,7 @@ final class ListMoviesViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        switch listMoviesState {
+        switch props {
         case .initial:
             setupView()
         case .loading:
@@ -139,7 +139,7 @@ final class ListMoviesViewController: UIViewController {
 
     private func setupListMoviesState() {
         listMoviesViewModel.listMoviesState = { [weak self] states in
-            self?.listMoviesState = states
+            self?.props = states
         }
     }
 
@@ -236,21 +236,28 @@ final class ListMoviesViewController: UIViewController {
 
 extension ListMoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        listMoviesViewModel.movies.count
+        if case let .success(movies) = props {
+            return movies.count
+        }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let cell = tableView
-            .dequeueReusableCell(withIdentifier: Constants.movieTableViewCellText) as? MovieTableViewCell
-        else { return UITableViewCell() }
-        listMoviesViewModel.setupMovie(index: indexPath.row)
-        cell.configure(listMoviesViewModel: listMoviesViewModel)
-        return cell
+        if case let .success(movies) = props {
+            guard
+                let cell = tableView
+                .dequeueReusableCell(withIdentifier: Constants.movieTableViewCellText) as? MovieTableViewCell
+            else { return UITableViewCell() }
+            cell.configure(listMoviesViewModel: listMoviesViewModel, movie: movies[indexPath.row])
+            return cell
+        }
+        return UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row < listMoviesViewModel.movies.count, let toDetailMovie = toDetailMovie else { return }
-        toDetailMovie(listMoviesViewModel.movies[indexPath.row])
+        if case let .success(movies) = props {
+            guard indexPath.row < movies.count, let toDetailMovie = toDetailMovie else { return }
+            toDetailMovie(movies[indexPath.row])
+        }
     }
 }

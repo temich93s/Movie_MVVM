@@ -7,10 +7,8 @@ import Foundation
 final class ListMoviesViewModel: ListMoviesViewModelProtocol {
     // MARK: - Public Properties
 
-    var movies: [Movie] = []
-    var movie: Movie?
     var currentCategoryMovies: CategoryMovies = .popular
-    var listMoviesState: ((ListMoviesState) -> ())?
+    var listMoviesState: ((ListMoviesState<Movie>) -> ())?
 
     // MARK: - Private Properties
 
@@ -26,14 +24,8 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     // MARK: - Public Methods
 
-    func fetchData(completion: @escaping ((Result<Data, Error>) -> Void)) {
-        guard let movie = movie else { return }
+    func fetchData(movie: Movie, completion: @escaping ((Result<Data, Error>) -> Void)) {
         imageService.loadImage(path: movie.posterPath, completion: completion)
-    }
-
-    func setupMovie(index: Int) {
-        guard index < movies.count else { return }
-        movie = movies[index]
     }
 
     func fetchMovies() {
@@ -42,8 +34,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case let .success(movies):
-                self.movies = movies
-                self.listMoviesState?(.success)
+                self.listMoviesState?(.success(movies))
             case let .failure(error):
                 self.listMoviesState?(.failure(error))
             }

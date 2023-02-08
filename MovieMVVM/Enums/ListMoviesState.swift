@@ -4,9 +4,9 @@
 import Foundation
 
 /// Состояния экрана со списком фильмов
-enum ListMoviesState {
+enum ListMoviesState<Model> {
     case initial
     case loading
-    case success
+    case success([Model])
     case failure(Error)
 }

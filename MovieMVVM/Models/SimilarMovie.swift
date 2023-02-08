@@ -5,8 +5,6 @@ import Foundation
 
 /// Похожий фильм
 struct SimilarMovie: Codable {
-    // MARK: - Public Properties
-
     /// Постер похожего письма
     let posterPath: String
 

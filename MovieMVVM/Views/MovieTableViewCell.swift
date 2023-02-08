@@ -74,14 +74,13 @@ final class MovieTableViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configure(listMoviesViewModel: ListMoviesViewModelProtocol) {
-        guard let movie = listMoviesViewModel.movie else { return }
+    func configure(listMoviesViewModel: ListMoviesViewModelProtocol, movie: Movie) {
         nameMovieLabel.text = movie.title
         descriptionMovieLabel.text = movie.overview
         dateMovieLabel.text = movie.releaseDate
         scoreMovieLabel.text = "\(movie.voteAverage)"
         imageMovieImageView.image = UIImage(named: Constants.placeholderImageText)
-        listMoviesViewModel.fetchData(completion: { [weak self] result in
+        listMoviesViewModel.fetchData(movie: movie, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(data):
