@@ -4,7 +4,7 @@
 import Foundation
 
 /// Сервис файлового менеджера
-final class FileManagerService {
+final class FileManagerService: FileManagerServiceProtocol {
     // MARK: - Public Methods
 
     func loadImageData(path: String) -> Data? {

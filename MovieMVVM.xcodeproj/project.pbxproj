@@ -43,6 +43,7 @@
 		AAAD6AB129096E40009C9672 /* SimilarMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAD6AB029096E40009C9672 /* SimilarMovies.swift */; };
 		AAFBFED12993A0DF003E6E51 /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFBFED02993A0DF003E6E51 /* Typealias.swift */; };
 		AAFBFED32993A175003E6E51 /* ImageAPIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFBFED22993A175003E6E51 /* ImageAPIServiceProtocol.swift */; };
+		AAFBFED52993A2F1003E6E51 /* FileManagerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFBFED42993A2F1003E6E51 /* FileManagerServiceProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +98,7 @@
 		AAAD6AB029096E40009C9672 /* SimilarMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMovies.swift; sourceTree = "<group>"; };
 		AAFBFED02993A0DF003E6E51 /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 		AAFBFED22993A175003E6E51 /* ImageAPIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPIServiceProtocol.swift; sourceTree = "<group>"; };
+		AAFBFED42993A2F1003E6E51 /* FileManagerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerServiceProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,9 +229,10 @@
 				AA905158299207900071405D /* ImageServiceProtocol.swift */,
 				AA90515C299208210071405D /* ImageService.swift */,
 				AA9051562992072D0071405D /* Proxy.swift */,
-				AA90515E299209BD0071405D /* FileManagerService.swift */,
 				AAFBFED22993A175003E6E51 /* ImageAPIServiceProtocol.swift */,
 				AA90515A299207CD0071405D /* ImageAPIService.swift */,
+				AAFBFED42993A2F1003E6E51 /* FileManagerServiceProtocol.swift */,
+				AA90515E299209BD0071405D /* FileManagerService.swift */,
 			);
 			path = Proxy;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				AA90513E2992012F0071405D /* MovieCoordinator.swift in Sources */,
 				AAAD6AAF290958CB009C9672 /* SimilarMovieCollectionViewCell.swift in Sources */,
 				AA905135299200C50071405D /* ListMoviesBuilder.swift in Sources */,
+				AAFBFED52993A2F1003E6E51 /* FileManagerServiceProtocol.swift in Sources */,
 				AA90513C299201200071405D /* ApplicationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

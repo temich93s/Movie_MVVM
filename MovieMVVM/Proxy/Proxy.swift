@@ -7,12 +7,12 @@ import Foundation
 final class Proxy: ImageServiceProtocol {
     // MARK: - Private Methods
 
-    private var fileManager: FileManagerService
+    private var fileManager: FileManagerServiceProtocol
     private var imageAPIService: ImageAPIServiceProtocol
 
     // MARK: - Initializers
 
-    init(fileManager: FileManagerService, imageAPIService: ImageAPIServiceProtocol) {
+    init(fileManager: FileManagerServiceProtocol, imageAPIService: ImageAPIServiceProtocol) {
         self.fileManager = fileManager
         self.imageAPIService = imageAPIService
     }
