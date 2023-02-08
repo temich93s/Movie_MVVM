@@ -1,4 +1,4 @@
-// CurrentMovieViewController.swift
+// DetailMovieViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
@@ -6,14 +6,11 @@ import UIKit
 // MARK: - CurrentMovieViewController
 
 /// Экран с выбранным фильмом
-final class CurrentMovieViewController: UIViewController {
+final class DetailMovieViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
         static let overviewText = "Overview"
-        static let firstPartURLText = "https://api.themoviedb.org/3/movie/"
-        static let secondPartURLText = "/similar?api_key=8216e974d625f2a458a739c20007dcd6&language=ru-RU&page=1"
-        static let posterPathQueryText = "https://image.tmdb.org/t/p/w500"
         static let systemPinkColorName = "SystemPinkColor"
         static let releaseDataLabelText = "Релиз:"
         static let voteAverageLabelText = "Оценка:"
@@ -21,6 +18,10 @@ final class CurrentMovieViewController: UIViewController {
         static let similarMovieLabelText = "Похожие фильмы"
         static let similarMovieCollectionViewCellText = "SimilarMovieCollectionViewCell"
         static let fatalErrorText = "init(coder:) has not been implemented"
+        static let errorText = "Error"
+        static let okText = "OK"
+        static let heightCoefficientNumber: CGFloat = 2 / 3
+        static let twoNumber = 2
     }
 
     // MARK: - Private Visual Properties
@@ -127,18 +128,16 @@ final class CurrentMovieViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private var similarMovies: [SimilarMovie]? = []
-
-    private var imagePosters: [Data] = []
-
+    private var detailMovieViewModel: DetailMovieViewModel
     private lazy var heightSimilarMovieCollectionView = similarMovieCollectionView.heightAnchor
         .constraint(equalToConstant: 0)
 
     // MARK: - Initializers
 
-    init(movie: Movie) {
+    init(detailMovieViewModel: DetailMovieViewModel) {
+        self.detailMovieViewModel = detailMovieViewModel
         super.init(nibName: nil, bundle: nil)
-        initView(movie: movie)
+        initView()
     }
 
     @available(*, unavailable)
@@ -155,14 +154,27 @@ final class CurrentMovieViewController: UIViewController {
 
     // MARK: - Private Methods
 
-    private func initView(movie: Movie) {
-        getDataImageFromURLImage(posterPath: movie.posterPath)
-        titleMovieLabel.text = movie.title
-        releaseDataValueLabel.text = movie.releaseDate
-        voteAverageValueLabel.text = "\(movie.voteAverage)"
-        voteCountValueLabel.text = "\(movie.voteCount)"
-        overviewMovieLabel.text = movie.overview
-        fetchSimilarMovies(idMovie: movie.id)
+    private func initView() {
+        detailMovieViewModel.mainPosterCompletion = { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(data):
+                self.imageMovieImageView.image = UIImage(data: data)
+            case let .failure(error):
+                self.showErrorAlert(
+                    alertTitle: Constants.errorText,
+                    message: error.localizedDescription,
+                    actionTitle: Constants.okText
+                )
+            }
+        }
+        detailMovieViewModel.fetchMainPosterData()
+        titleMovieLabel.text = detailMovieViewModel.movie.title
+        releaseDataValueLabel.text = detailMovieViewModel.movie.releaseDate
+        voteAverageValueLabel.text = "\(detailMovieViewModel.movie.voteAverage)"
+        voteCountValueLabel.text = "\(detailMovieViewModel.movie.voteCount)"
+        overviewMovieLabel.text = detailMovieViewModel.movie.overview
+        setupSimilarMovies()
     }
 
     private func setupView() {
@@ -215,54 +227,6 @@ final class CurrentMovieViewController: UIViewController {
         createMainActivityIndicatorViewConstraint()
     }
 
-    private func getDataImageFromURLImage(posterPath: String) {
-        guard let imageMovieNameURL = URL(string: "\(Constants.posterPathQueryText)\(posterPath)") else { return }
-        DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: imageMovieNameURL) else { return }
-            DispatchQueue.main.async {
-                self.imageMovieImageView.image = UIImage(data: data)
-            }
-        }
-    }
-
-    private func fetchSimilarMovies(idMovie: Int) {
-        let urlString = "\(Constants.firstPartURLText)\(idMovie)\(Constants.secondPartURLText)"
-        guard let url = URL(string: urlString) else { return }
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
-            if error == nil {
-                self.decodeData(data: data)
-                self.getDataImageFromURLImage()
-                DispatchQueue.main.async {
-                    self.similarMovieCollectionView.reloadData()
-                }
-            }
-        }
-        task.resume()
-    }
-
-    private func decodeData(data: Data?) {
-        let decoder = JSONDecoder()
-        guard let safeData = data else { return }
-        do {
-            let decodedData = try decoder.decode(SimilarMovies.self, from: safeData)
-            similarMovies = decodedData.results
-        } catch {
-            print(error)
-        }
-    }
-
-    private func getDataImageFromURLImage() {
-        guard let safeSimilarMovies = similarMovies else { return }
-        for index in 0 ..< safeSimilarMovies.count {
-            guard
-                let imageMovieNameURL =
-                URL(string: "\(Constants.posterPathQueryText)\(safeSimilarMovies[index].posterPath)"),
-                let imageData = try? Data(contentsOf: imageMovieNameURL)
-            else { continue }
-            imagePosters.append(imageData)
-        }
-    }
-
     @objc private func shareImageAction() {
         startItemSharing(item: imageMovieImageView.image)
     }
@@ -274,6 +238,23 @@ final class CurrentMovieViewController: UIViewController {
             applicationActivities: nil
         )
         present(safeActivityVC, animated: true, completion: nil)
+    }
+
+    private func setupSimilarMovies() {
+        detailMovieViewModel.similarMoviesCompletion = { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.similarMovieCollectionView.reloadData()
+            case let .failure(error):
+                self.showErrorAlert(
+                    alertTitle: Constants.errorText,
+                    message: error.localizedDescription,
+                    actionTitle: Constants.okText
+                )
+            }
+        }
+        detailMovieViewModel.fetchSimilarMovies()
     }
 
     private func createImageMovieImageViewConstraint() {
@@ -407,20 +388,21 @@ final class CurrentMovieViewController: UIViewController {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension CurrentMovieViewController: UICollectionViewDelegateFlowLayout {}
+extension DetailMovieViewController: UICollectionViewDelegateFlowLayout {}
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension CurrentMovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension DetailMovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if imagePosters.count != 0 {
+        if detailMovieViewModel.similarMovies.count != 0 {
             mainActivityIndicatorView.stopAnimating()
             mainActivityIndicatorView.isHidden = true
         }
         heightSimilarMovieCollectionView.constant =
-            similarMovieCollectionView.frame.width * 2 / 3 * CGFloat(imagePosters.count / 2)
+            similarMovieCollectionView.frame.width * Constants.heightCoefficientNumber *
+            CGFloat(detailMovieViewModel.similarMovies.count / Constants.twoNumber)
         heightSimilarMovieCollectionView.isActive = true
-        return imagePosters.count
+        return detailMovieViewModel.similarMovies.count
     }
 
     func collectionView(
@@ -432,9 +414,10 @@ extension CurrentMovieViewController: UICollectionViewDelegate, UICollectionView
                 withReuseIdentifier: Constants.similarMovieCollectionViewCellText,
                 for: indexPath
             ) as? SimilarMovieCollectionViewCell,
-            indexPath.row < imagePosters.count
+            indexPath.row < detailMovieViewModel.similarMovies.count
         else { return UICollectionViewCell() }
-        cell.configureSimilarMovieCollectionViewCell(dataImage: imagePosters[indexPath.row])
+        detailMovieViewModel.setupPoster(index: indexPath.row)
+        cell.configure(detailMovieViewModel: detailMovieViewModel)
         return cell
     }
 

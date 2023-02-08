@@ -11,6 +11,7 @@ final class SimilarMovieCollectionViewCell: UICollectionViewCell {
 
     private enum Constants {
         static let fatalErrorText = "init(coder:) has not been implemented"
+        static let placeholderImageText = "PlaceholderImage"
     }
 
     // MARK: - Private Visual Properties
@@ -34,8 +35,17 @@ final class SimilarMovieCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func configureSimilarMovieCollectionViewCell(dataImage: Data) {
-        imageMovieImageView.image = UIImage(data: dataImage)
+    func configure(detailMovieViewModel: DetailMovieViewModelProtocol) {
+        detailMovieViewModel.setupSimilarPosterCompetion { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(data):
+                self.imageMovieImageView.image = UIImage(data: data)
+            case .failure:
+                self.imageMovieImageView.image = UIImage(named: Constants.placeholderImageText)
+            }
+        }
+        detailMovieViewModel.fetchSimilarPosterData()
     }
 
     // MARK: - Private Methods
