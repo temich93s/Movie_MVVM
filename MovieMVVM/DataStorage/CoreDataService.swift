@@ -4,7 +4,8 @@
 import CoreData
 import UIKit
 
-final class CoreDataService {
+/// Сервис работы с CoreData
+final class CoreDataService: CoreDataServiceProtocol {
     // MARK: - Public Methods
 
     func saveData(category: CategoryMovies, movies: [Movie]) {

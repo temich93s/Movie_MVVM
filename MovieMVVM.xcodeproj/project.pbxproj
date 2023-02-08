@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA3715EE299468A200B9E97D /* CoreDataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */; };
 		AA4AF4EE2906938B00236B5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF4ED2906938B00236B5C /* AppDelegate.swift */; };
 		AA4AF4F02906938B00236B5C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF4EF2906938B00236B5C /* SceneDelegate.swift */; };
 		AA4AF4F52906938B00236B5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4AF4F32906938B00236B5C /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServiceProtocol.swift; sourceTree = "<group>"; };
 		AA4AF4EA2906938B00236B5C /* MovieMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4AF4ED2906938B00236B5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA4AF4EF2906938B00236B5C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				AA75A9B82993CF2500C8FE79 /* CoreDataService.swift */,
+				AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */,
 				AA75A9BA2993CF4700C8FE79 /* MovieMVVM.xcdatamodeld */,
 			);
 			path = DataStorage;
@@ -484,6 +487,7 @@
 				AA75A9BC2993CF4700C8FE79 /* MovieMVVM.xcdatamodeld in Sources */,
 				AA905149299201D50071405D /* ListMoviesViewModel.swift in Sources */,
 				AA9051572992072D0071405D /* Proxy.swift in Sources */,
+				AA3715EE299468A200B9E97D /* CoreDataServiceProtocol.swift in Sources */,
 				AA4AF5082906A53900236B5C /* ListMoviesViewController.swift in Sources */,
 				AAFBFED32993A175003E6E51 /* ImageAPIServiceProtocol.swift in Sources */,
 				AA90513E2992012F0071405D /* MovieCoordinator.swift in Sources */,

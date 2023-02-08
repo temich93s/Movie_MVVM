@@ -10,6 +10,8 @@ final class DetailMovieViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
+        static let apiTitleText = "Ключ API"
+        static let apiMessageText = "Введите ключ API"
         static let overviewText = "Overview"
         static let systemPinkColorName = "SystemPinkColor"
         static let releaseDataLabelText = "Релиз:"
@@ -155,6 +157,17 @@ final class DetailMovieViewController: UIViewController {
     // MARK: - Private Methods
 
     private func initView() {
+        detailMovieViewModel.uploadApiKeyCompletion = { [weak self] in
+            guard let self = self else { return }
+            self.showAlert(
+                title: Constants.apiTitleText,
+                message: Constants.apiMessageText,
+                actionTitle: Constants.okText
+            ) { key in
+                self.detailMovieViewModel.uploadApiKey(key)
+            }
+        }
+        detailMovieViewModel.checkApiKey()
         detailMovieViewModel.mainPosterCompletion = { [weak self] result in
             guard let self = self else { return }
             switch result {

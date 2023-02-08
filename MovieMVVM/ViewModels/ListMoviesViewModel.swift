@@ -9,21 +9,27 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     var currentCategoryMovies: CategoryMovies = .popular
     var listMoviesState: ((ListMoviesState<Movie>) -> ())?
-
-    var coreDataService = CoreDataService()
-    var keychainService = KeychainService()
     var uploadApiKeyCompletion: (() -> ())?
 
     // MARK: - Private Properties
 
     private var networkService: NetworkServiceProtocol
     private var imageService: ImageServiceProtocol
+    private var keychainService: KeychainServiceProtocol
+    private var coreDataService: CoreDataServiceProtocol
 
     // MARK: - Initializers
 
-    init(networkService: NetworkService, imageService: ImageServiceProtocol) {
+    init(
+        networkService: NetworkService,
+        imageService: ImageServiceProtocol,
+        keychainService: KeychainServiceProtocol,
+        coreDataService: CoreDataServiceProtocol
+    ) {
         self.networkService = networkService
         self.imageService = imageService
+        self.keychainService = keychainService
+        self.coreDataService = coreDataService
     }
 
     // MARK: - Public Methods
@@ -54,8 +60,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
             uploadApiKeyCompletion?()
             return
         }
-        // networkService?.setupAPIKey(apiKey)
-        print(apiKey)
+        networkService.setupAPIKey(apiKey)
     }
 
     func uploadApiKey(_ key: String) {

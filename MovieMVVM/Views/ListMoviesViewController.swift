@@ -10,6 +10,8 @@ final class ListMoviesViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
+        static let apiTitleText = "Ключ API"
+        static let apiMessageText = "Введите ключ API"
         static let systemPinkColorName = "SystemPinkColor"
         static let systemLightGrayColorName = "SystemLightGrayColor"
         static let moviesText = "Movies"
@@ -20,8 +22,6 @@ final class ListMoviesViewController: UIViewController {
         static let fatalErrorText = "init(coder:) has not been implemented"
         static let errorText = "Error"
         static let okText = "OK"
-        static let apiTitleText = "Ключ API"
-        static let apiMessageText = "Введите ключ API"
     }
 
     // MARK: - Private Visual Properties
@@ -93,7 +93,6 @@ final class ListMoviesViewController: UIViewController {
 
     init(listMovieViewModel: ListMoviesViewModel) {
         listMoviesViewModel = listMovieViewModel
-        listMoviesViewModel.fetchMovies()
         super.init(nibName: nil, bundle: nil)
         listMoviesViewModel.uploadApiKeyCompletion = { [weak self] in
             guard let self = self else { return }
@@ -103,9 +102,10 @@ final class ListMoviesViewController: UIViewController {
                 actionTitle: Constants.okText
             ) { key in
                 self.listMoviesViewModel.uploadApiKey(key)
-                print(key)
             }
         }
+        listMoviesViewModel.checkApiKey()
+        listMoviesViewModel.fetchMovies()
     }
 
     @available(*, unavailable)
@@ -120,7 +120,6 @@ final class ListMoviesViewController: UIViewController {
         switch props {
         case .initial:
             setupView()
-            listMoviesViewModel.checkApiKey()
         case .loading:
             mainActivityIndicatorView.startAnimating()
             mainActivityIndicatorView.isHidden = false

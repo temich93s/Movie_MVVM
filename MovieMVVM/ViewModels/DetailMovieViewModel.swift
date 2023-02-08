@@ -13,17 +13,25 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)?
     var similarPosterCompletion: ((Result<Data, Error>) -> Void)?
     var mainPosterCompletion: ((Result<Data, Error>) -> Void)?
+    var uploadApiKeyCompletion: (() -> ())?
 
     // MARK: - Private Properties
 
     private var networkService: NetworkServiceProtocol
     private var imageService: ImageServiceProtocol
+    private var keychainService: KeychainServiceProtocol
 
     // MARK: - Initializers
 
-    init(networkService: NetworkService, imageService: ImageServiceProtocol, movie: Movie) {
+    init(
+        networkService: NetworkService,
+        imageService: ImageServiceProtocol,
+        keychainService: KeychainServiceProtocol,
+        movie: Movie
+    ) {
         self.networkService = networkService
         self.imageService = imageService
+        self.keychainService = keychainService
         self.movie = movie
     }
 
@@ -62,5 +70,17 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
 
     func setupSimilarPosterCompetion(completion: ((Result<Data, Error>) -> Void)?) {
         similarPosterCompletion = completion
+    }
+
+    func checkApiKey() {
+        guard let apiKey = keychainService.get(forKey: .apiKey) else {
+            uploadApiKeyCompletion?()
+            return
+        }
+        networkService.setupAPIKey(apiKey)
+    }
+
+    func uploadApiKey(_ key: String) {
+        keychainService.save(key, forKey: .apiKey)
     }
 }

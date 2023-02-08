@@ -7,4 +7,5 @@ import Foundation
 protocol NetworkServiceProtocol {
     func fetchMovies(categoryMovies: CategoryMovies, completion: @escaping (Result<[Movie], Error>) -> Void)
     func fetchSimilarMovies(idMovie: Int, completion: @escaping ((Result<[SimilarMovie], Error>) -> Void))
+    func setupAPIKey(_ apiKey: String)
 }
