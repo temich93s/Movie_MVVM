@@ -20,13 +20,13 @@ final class Proxy: LoadImageProtocol {
     // MARK: - Public Methods
 
     func loadImage(path: String, completion: @escaping ((Result<Data, Error>) -> Void)) {
-        if let cacheDate = fileManager.loadData(path: path) {
+        if let cacheDate = fileManager.loadImageData(path: path) {
             completion(Result.success(cacheDate))
         } else {
             imageAPIService.loadImage(path: path) { result in
                 switch result {
                 case let .success(data):
-                    self.fileManager.saveData(path: path, data: data)
+                    self.fileManager.saveImageData(path: path, data: data)
                 default:
                     break
                 }

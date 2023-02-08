@@ -3,23 +3,42 @@
 
 import Foundation
 
-/// Файловый менеджер
+/// Файловый менеджер изображений
 final class ImageFileManager {
-    // MARK: - Private Properties
+    // MARK: - Constants
 
-    private let tmpDirectory = FileManager.default.temporaryDirectory
+    private enum Constants {
+        static let folderName = "Images"
+    }
 
     // MARK: - Public Methods
 
-    func loadData(path: String) -> Data? {
-        let testFile = tmpDirectory.appendingPathComponent(path).path
-        guard let url = URL(string: testFile) else { return nil }
-        let data = try? Data(contentsOf: url)
+    func loadImageData(path: String) -> Data? {
+        guard let imagePath = makeImagePath(path: path) else { return nil }
+        let imagePathURL = URL(filePath: imagePath)
+        let data = try? Data(contentsOf: imagePathURL)
         return data
     }
 
-    func saveData(path: String, data: Data) {
-        let testFile = tmpDirectory.appendingPathComponent(path).path
-        FileManager.default.createFile(atPath: testFile, contents: data, attributes: nil)
+    func saveImageData(path: String, data: Data) {
+        guard let imagePath = makeImagePath(path: path) else { return }
+        FileManager.default.createFile(atPath: imagePath, contents: data)
+    }
+
+    // MARK: - Private Methods
+
+    private func makeImagePath(path: String) -> String? {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        else { return nil }
+        let folderUrl = documentDirectory.appendingPathComponent(Constants.folderName, isDirectory: true)
+        if !FileManager.default.fileExists(atPath: folderUrl.path) {
+            do {
+                try FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true)
+            } catch {
+                print(error.localizedDescription)
+                return nil
+            }
+        }
+        return folderUrl.appendingPathComponent(path).path
     }
 }
