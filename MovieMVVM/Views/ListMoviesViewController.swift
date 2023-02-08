@@ -75,7 +75,7 @@ final class ListMoviesViewController: UIViewController {
     // MARK: - Public Properties
 
     var listMoviesViewModel: ListMoviesViewModelProtocol
-    var onFinishFlow: (() -> ())?
+    var onFinishFlow: VoidHandler?
     var toDetailMovie: ((Movie) -> ())?
     var listMoviesState: ListMoviesState = .initial {
         didSet {

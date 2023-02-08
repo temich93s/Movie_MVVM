@@ -5,8 +5,6 @@ import Foundation
 
 /// Информация о фильме
 struct Movie: Codable {
-    // MARK: - Public Properties
-
     /// Идентификатор фильма
     let id: Int
     /// Краткое описание фильма

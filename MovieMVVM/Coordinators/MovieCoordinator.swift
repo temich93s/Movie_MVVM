@@ -8,7 +8,7 @@ final class MovieCoordinator: BaseCoordinator {
     // MARK: - Public Properties
 
     var rootController: UINavigationController?
-    var onFinishFlow: (() -> ())?
+    var onFinishFlow: VoidHandler?
 
     // MARK: - Public Methods
 

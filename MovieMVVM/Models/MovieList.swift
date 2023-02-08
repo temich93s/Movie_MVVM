@@ -5,8 +5,6 @@ import Foundation
 
 /// Список фильмов
 struct MovieList: Codable {
-    // MARK: - Public Properties
-
     /// Номер страницы с набором фильмов
     let page: Int
     /// Массив с фильмами
