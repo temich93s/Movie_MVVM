@@ -9,7 +9,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     var currentCategoryMovies: CategoryMovies = .popular
     var listMoviesState: ((ListMoviesState<Movie>) -> ())?
-    var uploadApiKeyCompletion: (() -> ())?
+    var uploadApiKeyCompletion: VoidHandler?
 
     // MARK: - Private Properties
 
@@ -40,14 +40,14 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     func fetchMovies() {
         listMoviesState?(.loading)
-        if let coreDataMovies = coreDataService.getMovieData(category: currentCategoryMovies) {
+        if let coreDataMovies = coreDataService.getMovie(category: currentCategoryMovies) {
             listMoviesState?(.success(coreDataMovies))
         }
         networkService.fetchMovies(categoryMovies: currentCategoryMovies) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(movies):
-                self.coreDataService.saveMovieData(
+                self.coreDataService.saveMovie(
                     category: self.currentCategoryMovies, movies: movies
                 )
                 self.listMoviesState?(.success(movies))

@@ -9,7 +9,7 @@ protocol ListMoviesViewModelProtocol {
 
     var currentCategoryMovies: CategoryMovies { get set }
     var listMoviesState: ((ListMoviesState<Movie>) -> ())? { get set }
-    var uploadApiKeyCompletion: (() -> ())? { get set }
+    var uploadApiKeyCompletion: VoidHandler? { get set }
 
     // MARK: - Public Methods
 
