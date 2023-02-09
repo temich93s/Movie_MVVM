@@ -6,12 +6,27 @@ import UIKit
 
 /// Сервис работы с CoreData
 final class CoreDataService: CoreDataServiceProtocol {
+    // MARK: - Constants
+
+    private enum Constants {
+        static let similarMovieDataText = "SimilarMovieData"
+        static let topRatedMovieText = "TopRatedMovie"
+        static let popularMovieText = "PopularMovie"
+        static let upcomingMovieText = "UpcomingMovie"
+        static let emptyText = ""
+    }
+
+    // MARK: - Private Properties
+
+    private let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
+
     // MARK: - Public Methods
 
     func saveSimilarMovie(id: Int, similarMovie: [SimilarMovie]) {
-        guard let context = getContext() else { return }
+        guard let context = context else { return }
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        guard let entity = NSEntityDescription.entity(forEntityName: "SimilarMovieData", in: context) else { return }
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.similarMovieDataText, in: context)
+        else { return }
         var posters: [String] = []
         for movie in similarMovie {
             posters.append(movie.posterPath)
@@ -21,13 +36,13 @@ final class CoreDataService: CoreDataServiceProtocol {
         movieObject.id = Int64(id)
         do {
             try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
+        } catch {
+            context.rollback()
         }
     }
 
     func getSimilarMovie(id: Int) -> [SimilarMovie]? {
-        guard let context = getContext() else { return nil }
+        guard let context = context else { return nil }
         let fetchRequest: NSFetchRequest<SimilarMovieData> = SimilarMovieData.fetchRequest()
         do {
             let similarMovieData = try context.fetch(fetchRequest)
@@ -40,15 +55,14 @@ final class CoreDataService: CoreDataServiceProtocol {
                 }
                 return similarMovies
             }
-        } catch let error as NSError {
-            print(error.localizedDescription)
+        } catch {
             return nil
         }
         return nil
     }
 
     func saveMovieData(category: CategoryMovies, movies: [Movie]) {
-        guard let context = getContext() else { return }
+        guard let context = context else { return }
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         switch category {
         case .topRated:
@@ -60,21 +74,21 @@ final class CoreDataService: CoreDataServiceProtocol {
         }
         do {
             try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
+        } catch {
+            context.rollback()
         }
     }
 
     func getMovieData(category: CategoryMovies) -> [Movie]? {
         switch category {
         case .topRated:
-            let topRatedMovieData = getData(entityName: "TopRatedMovie", type: TopRatedMovie.self)
+            let topRatedMovieData = getData(entityName: Constants.topRatedMovieText, type: TopRatedMovie.self)
             return getMovies(topRatedMovies: topRatedMovieData)
         case .popular:
-            let popularMovieData = getData(entityName: "PopularMovie", type: PopularMovie.self)
+            let popularMovieData = getData(entityName: Constants.popularMovieText, type: PopularMovie.self)
             return getMovies(popularMovies: popularMovieData)
         case .upcoming:
-            let upcomingMovieData = getData(entityName: "UpcomingMovie", type: UpcomingMovie.self)
+            let upcomingMovieData = getData(entityName: Constants.upcomingMovieText, type: UpcomingMovie.self)
             return getMovies(upcomingMovies: upcomingMovieData)
         }
     }
@@ -82,7 +96,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     // MARK: - Private Methods
 
     private func getData<T: NSManagedObject>(entityName: String, type: T.Type) -> [T]? {
-        guard let context = getContext() else { return nil }
+        guard let context = context else { return nil }
         let fetchRequest = NSFetchRequest<T>(entityName: entityName)
         let data = try? context.fetch(fetchRequest)
         return data
@@ -94,10 +108,10 @@ final class CoreDataService: CoreDataServiceProtocol {
         for popularMovie in popularMovies {
             let movie = Movie(
                 id: Int(popularMovie.id),
-                overview: popularMovie.overview ?? "",
-                posterPath: popularMovie.posterPath ?? "",
-                releaseDate: popularMovie.releaseDate ?? "",
-                title: popularMovie.title ?? "",
+                overview: popularMovie.overview ?? Constants.emptyText,
+                posterPath: popularMovie.posterPath ?? Constants.emptyText,
+                releaseDate: popularMovie.releaseDate ?? Constants.emptyText,
+                title: popularMovie.title ?? Constants.emptyText,
                 voteAverage: popularMovie.voteAverage,
                 voteCount: popularMovie.voteCount
             )
@@ -112,10 +126,10 @@ final class CoreDataService: CoreDataServiceProtocol {
         for topRatedMovie in topRatedMovies {
             let movie = Movie(
                 id: Int(topRatedMovie.id),
-                overview: topRatedMovie.overview ?? "",
-                posterPath: topRatedMovie.posterPath ?? "",
-                releaseDate: topRatedMovie.releaseDate ?? "",
-                title: topRatedMovie.title ?? "",
+                overview: topRatedMovie.overview ?? Constants.emptyText,
+                posterPath: topRatedMovie.posterPath ?? Constants.emptyText,
+                releaseDate: topRatedMovie.releaseDate ?? Constants.emptyText,
+                title: topRatedMovie.title ?? Constants.emptyText,
                 voteAverage: topRatedMovie.voteAverage,
                 voteCount: topRatedMovie.voteCount
             )
@@ -130,10 +144,10 @@ final class CoreDataService: CoreDataServiceProtocol {
         for upcomingMovie in upcomingMovies {
             let movie = Movie(
                 id: Int(upcomingMovie.id),
-                overview: upcomingMovie.overview ?? "",
-                posterPath: upcomingMovie.posterPath ?? "",
-                releaseDate: upcomingMovie.releaseDate ?? "",
-                title: upcomingMovie.title ?? "",
+                overview: upcomingMovie.overview ?? Constants.emptyText,
+                posterPath: upcomingMovie.posterPath ?? Constants.emptyText,
+                releaseDate: upcomingMovie.releaseDate ?? Constants.emptyText,
+                title: upcomingMovie.title ?? Constants.emptyText,
                 voteAverage: upcomingMovie.voteAverage,
                 voteCount: upcomingMovie.voteCount
             )
@@ -143,8 +157,9 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     private func saveTopRatedMovie(movies: [Movie], context: NSManagedObjectContext) {
-        deleteOldData(entity: "TopRatedMovie")
-        guard let entity = NSEntityDescription.entity(forEntityName: "TopRatedMovie", in: context) else { return }
+        deleteOldData(entity: Constants.topRatedMovieText)
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.topRatedMovieText, in: context)
+        else { return }
         for movie in movies {
             let movieObject = TopRatedMovie(entity: entity, insertInto: context)
             movieObject.id = Int64(movie.id)
@@ -158,8 +173,9 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     private func savePopularMovie(movies: [Movie], context: NSManagedObjectContext) {
-        deleteOldData(entity: "PopularMovie")
-        guard let entity = NSEntityDescription.entity(forEntityName: "PopularMovie", in: context) else { return }
+        deleteOldData(entity: Constants.popularMovieText)
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.popularMovieText, in: context)
+        else { return }
         for movie in movies {
             let movieObject = PopularMovie(entity: entity, insertInto: context)
             movieObject.id = Int64(movie.id)
@@ -173,8 +189,9 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     private func saveUpcomingMovie(movies: [Movie], context: NSManagedObjectContext) {
-        deleteOldData(entity: "UpcomingMovie")
-        guard let entity = NSEntityDescription.entity(forEntityName: "UpcomingMovie", in: context) else { return }
+        deleteOldData(entity: Constants.upcomingMovieText)
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.upcomingMovieText, in: context)
+        else { return }
         for movie in movies {
             let movieObject = UpcomingMovie(entity: entity, insertInto: context)
             movieObject.id = Int64(movie.id)
@@ -188,7 +205,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     private func deleteOldData(entity: String) {
-        guard let context = getContext() else { return }
+        guard let context = context else { return }
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
         do {
@@ -199,12 +216,7 @@ final class CoreDataService: CoreDataServiceProtocol {
             }
             try context.save()
         } catch {
-            print("Detele all data in \(entity) error :", error)
+            context.rollback()
         }
-    }
-
-    private func getContext() -> NSManagedObjectContext? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        return appDelegate.persistentContainer.viewContext
     }
 }
