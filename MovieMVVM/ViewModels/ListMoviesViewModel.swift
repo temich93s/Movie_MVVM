@@ -47,7 +47,9 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case let .success(movies):
-                self.coreDataService.saveMovieData(category: self.currentCategoryMovies, movies: movies)
+                self.coreDataService.saveMovieData(
+                    category: self.currentCategoryMovies, movies: movies
+                )
                 self.listMoviesState?(.success(movies))
             case let .failure(error):
                 self.listMoviesState?(.failure(error))

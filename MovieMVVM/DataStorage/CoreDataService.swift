@@ -12,6 +12,7 @@ final class CoreDataService: CoreDataServiceProtocol {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        //     context.shouldDeleteInaccessibleFaults = true
         switch category {
         case .topRated:
             saveTopRatedMovie(movies: movies, context: context)
@@ -115,6 +116,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     private func saveTopRatedMovie(movies: [Movie], context: NSManagedObjectContext) {
+        deleteOldData(entity: "TopRatedMovie")
         guard let entity = NSEntityDescription.entity(forEntityName: "TopRatedMovie", in: context) else { return }
         for movie in movies {
             let movieObject = TopRatedMovie(entity: entity, insertInto: context)
@@ -129,6 +131,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     private func savePopularMovie(movies: [Movie], context: NSManagedObjectContext) {
+        deleteOldData(entity: "PopularMovie")
         guard let entity = NSEntityDescription.entity(forEntityName: "PopularMovie", in: context) else { return }
         for movie in movies {
             let movieObject = PopularMovie(entity: entity, insertInto: context)
@@ -143,6 +146,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     private func saveUpcomingMovie(movies: [Movie], context: NSManagedObjectContext) {
+        deleteOldData(entity: "UpcomingMovie")
         guard let entity = NSEntityDescription.entity(forEntityName: "UpcomingMovie", in: context) else { return }
         for movie in movies {
             let movieObject = UpcomingMovie(entity: entity, insertInto: context)
@@ -153,6 +157,23 @@ final class CoreDataService: CoreDataServiceProtocol {
             movieObject.title = movie.title
             movieObject.voteAverage = movie.voteAverage
             movieObject.voteCount = movie.voteCount
+        }
+    }
+
+    func deleteOldData(entity: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        fetchRequest.returnsObjectsAsFaults = false
+        do {
+            let results = try context.fetch(fetchRequest)
+            for object in results {
+                guard let objectData = object as? NSManagedObject else { continue }
+                context.delete(objectData)
+            }
+            try context.save()
+        } catch {
+            print("Detele all data in \(entity) error :", error)
         }
     }
 }
