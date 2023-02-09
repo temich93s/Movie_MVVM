@@ -168,6 +168,10 @@ final class DetailMovieViewController: UIViewController {
             }
         }
         detailMovieViewModel.checkApiKey()
+        detailMovieViewModel.reloadCollection = { [weak self] in
+            guard let self = self else { return }
+            self.similarMovieCollectionView.reloadData()
+        }
         detailMovieViewModel.mainPosterCompletion = { [weak self] result in
             guard let self = self else { return }
             switch result {

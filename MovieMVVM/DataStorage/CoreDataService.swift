@@ -41,6 +41,42 @@ final class CoreDataService: CoreDataServiceProtocol {
         }
     }
 
+    func saveSimilarMovieData(similarMovie: [SimilarMovie]) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        deleteOldData(entity: "SimilarSaveMovie")
+        guard let entity = NSEntityDescription.entity(forEntityName: "SimilarSaveMovie", in: context) else { return }
+        for movie in similarMovie {
+            let movieObject = SimilarSaveMovie(entity: entity, insertInto: context)
+            movieObject.posterPath = movie.posterPath
+        }
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+
+    func getSimilarMovieData() -> [SimilarMovie]? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<SimilarSaveMovie> = SimilarSaveMovie.fetchRequest()
+        do {
+            let moviesCoreData = try context.fetch(fetchRequest)
+            var similarMovies: [SimilarMovie] = []
+            for movieCoreData in moviesCoreData {
+                let similarMovie = SimilarMovie(posterPath: movieCoreData.posterPath ?? "")
+                similarMovies.append(similarMovie)
+            }
+            print(similarMovies)
+            return similarMovies
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
     // MARK: - Private Methods
 
     private func getTopRatedMovie(context: NSManagedObjectContext) -> [Movie]? {

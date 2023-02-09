@@ -12,12 +12,14 @@ final class DetailMovieBuilder: DetailMovieBuilderProtocol {
         let fileManager = FileManagerService()
         let imageAPIService = ImageAPIService()
         let keychainService = KeychainService()
+        let coreDataService = CoreDataService()
         let proxy = Proxy(fileManager: fileManager, imageAPIService: imageAPIService)
         let imageService = ImageService(proxy: proxy)
         let detailMovieViewModel = DetailMovieViewModel(
             networkService: networkService,
             imageService: imageService,
             keychainService: keychainService,
+            coreDataService: coreDataService,
             movie: movie
         )
         let detailMovieViewController = DetailMovieViewController(detailMovieViewModel: detailMovieViewModel)

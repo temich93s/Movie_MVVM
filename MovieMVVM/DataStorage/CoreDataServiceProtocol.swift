@@ -7,4 +7,6 @@ import Foundation
 protocol CoreDataServiceProtocol {
     func saveMovieData(category: CategoryMovies, movies: [Movie])
     func getMovieData(category: CategoryMovies) -> [Movie]?
+    func saveSimilarMovieData(similarMovie: [SimilarMovie])
+    func getSimilarMovieData() -> [SimilarMovie]?
 }
