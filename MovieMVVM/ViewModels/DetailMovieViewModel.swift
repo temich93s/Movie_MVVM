@@ -60,7 +60,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
                 switch result {
                 case let .success(similarMovies):
                     self.similarMovies = similarMovies
-                    self.coreDataService.saveSimilarMovieData(similarMovie: similarMovies)
+                    self.coreDataService.saveSimilarMovie(id: self.movie.id, similarMovie: similarMovies)
                     similarMoviesCompletion(result)
                 case .failure:
                     similarMoviesCompletion(result)
@@ -91,7 +91,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     }
 
     private func loadSimilarMovies() {
-        guard let similarMovies = coreDataService.getSimilarMovieData() else { return }
+        guard let similarMovies = coreDataService.getSimilarMovie(id: movie.id) else { return }
         self.similarMovies = similarMovies
         reloadCollection?()
     }

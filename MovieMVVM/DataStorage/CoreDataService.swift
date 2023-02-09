@@ -8,11 +8,51 @@ import UIKit
 final class CoreDataService: CoreDataServiceProtocol {
     // MARK: - Public Methods
 
+    func saveSimilarMovie(id: Int, similarMovie: [SimilarMovie]) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        guard let entity = NSEntityDescription.entity(forEntityName: "SimilarMovieData", in: context) else { return }
+        var posters: [String] = []
+        for movie in similarMovie {
+            posters.append(movie.posterPath)
+        }
+        let movieObject = SimilarMovieData(entity: entity, insertInto: context)
+        movieObject.postersPath = posters
+        movieObject.id = Int64(id)
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+
+    func getSimilarMovie(id: Int) -> [SimilarMovie]? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<SimilarMovieData> = SimilarMovieData.fetchRequest()
+        do {
+            let similarMovieData = try context.fetch(fetchRequest)
+            var similarMovies: [SimilarMovie] = []
+            for movie in similarMovieData {
+                guard Int(movie.id) == id else { continue }
+                guard let posters = movie.postersPath else { return nil }
+                for poster in posters {
+                    similarMovies.append(SimilarMovie(posterPath: poster))
+                }
+                return similarMovies
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return nil
+        }
+        return nil
+    }
+
     func saveMovieData(category: CategoryMovies, movies: [Movie]) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        //     context.shouldDeleteInaccessibleFaults = true
         switch category {
         case .topRated:
             saveTopRatedMovie(movies: movies, context: context)
@@ -38,42 +78,6 @@ final class CoreDataService: CoreDataServiceProtocol {
             return getPopularMovie(context: context)
         case .upcoming:
             return getUpcomingMovie(context: context)
-        }
-    }
-
-    func saveSimilarMovieData(similarMovie: [SimilarMovie]) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        deleteOldData(entity: "SimilarSaveMovie")
-        guard let entity = NSEntityDescription.entity(forEntityName: "SimilarSaveMovie", in: context) else { return }
-        for movie in similarMovie {
-            let movieObject = SimilarSaveMovie(entity: entity, insertInto: context)
-            movieObject.posterPath = movie.posterPath
-        }
-        do {
-            try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-    }
-
-    func getSimilarMovieData() -> [SimilarMovie]? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<SimilarSaveMovie> = SimilarSaveMovie.fetchRequest()
-        do {
-            let moviesCoreData = try context.fetch(fetchRequest)
-            var similarMovies: [SimilarMovie] = []
-            for movieCoreData in moviesCoreData {
-                let similarMovie = SimilarMovie(posterPath: movieCoreData.posterPath ?? "")
-                similarMovies.append(similarMovie)
-            }
-            print(similarMovies)
-            return similarMovies
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return nil
         }
     }
 

@@ -14,11 +14,12 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="SimilarSaveMovie" representedClassName="SimilarSaveMovie" syncable="YES" codeGenerationType="class">
-        <attribute name="posterPath" optional="YES" attributeType="String"/>
+    <entity name="SimilarMovieData" representedClassName="SimilarMovieData" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="postersPath" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="posterPath"/>
+                <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
