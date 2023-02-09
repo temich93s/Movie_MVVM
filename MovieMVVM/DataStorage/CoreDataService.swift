@@ -9,8 +9,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     // MARK: - Public Methods
 
     func saveSimilarMovie(id: Int, similarMovie: [SimilarMovie]) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
+        guard let context = getContext() else { return }
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         guard let entity = NSEntityDescription.entity(forEntityName: "SimilarMovieData", in: context) else { return }
         var posters: [String] = []
@@ -28,8 +27,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     func getSimilarMovie(id: Int) -> [SimilarMovie]? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let context = appDelegate.persistentContainer.viewContext
+        guard let context = getContext() else { return nil }
         let fetchRequest: NSFetchRequest<SimilarMovieData> = SimilarMovieData.fetchRequest()
         do {
             let similarMovieData = try context.fetch(fetchRequest)
@@ -50,8 +48,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     func saveMovieData(category: CategoryMovies, movies: [Movie]) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
+        guard let context = getContext() else { return }
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         switch category {
         case .topRated:
@@ -69,8 +66,7 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     func getMovieData(category: CategoryMovies) -> [Movie]? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let context = appDelegate.persistentContainer.viewContext
+        guard let context = getContext() else { return nil }
         switch category {
         case .topRated:
             return getTopRatedMovie(context: context)
@@ -200,9 +196,8 @@ final class CoreDataService: CoreDataServiceProtocol {
         }
     }
 
-    func deleteOldData(entity: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
+    private func deleteOldData(entity: String) {
+        guard let context = getContext() else { return }
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
         do {
@@ -215,5 +210,10 @@ final class CoreDataService: CoreDataServiceProtocol {
         } catch {
             print("Detele all data in \(entity) error :", error)
         }
+    }
+
+    private func getContext() -> NSManagedObjectContext? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        return appDelegate.persistentContainer.viewContext
     }
 }
