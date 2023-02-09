@@ -7,7 +7,6 @@ import Foundation
 enum ListMoviesState<Model> {
     case initial
     case loading
-    //   case successDataStorage([Model])
     case success([Model])
     case failure(Error)
 }
