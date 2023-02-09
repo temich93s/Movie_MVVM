@@ -66,89 +66,80 @@ final class CoreDataService: CoreDataServiceProtocol {
     }
 
     func getMovieData(category: CategoryMovies) -> [Movie]? {
-        guard let context = getContext() else { return nil }
         switch category {
         case .topRated:
-            return getTopRatedMovie(context: context)
+            let topRatedMovieData = getData(entityName: "TopRatedMovie", type: TopRatedMovie.self)
+            return getMovies(topRatedMovies: topRatedMovieData)
         case .popular:
-            return getPopularMovie(context: context)
+            let popularMovieData = getData(entityName: "PopularMovie", type: PopularMovie.self)
+            return getMovies(popularMovies: popularMovieData)
         case .upcoming:
-            return getUpcomingMovie(context: context)
+            let upcomingMovieData = getData(entityName: "UpcomingMovie", type: UpcomingMovie.self)
+            return getMovies(upcomingMovies: upcomingMovieData)
         }
     }
 
     // MARK: - Private Methods
 
-    private func getTopRatedMovie(context: NSManagedObjectContext) -> [Movie]? {
-        let fetchRequest: NSFetchRequest<TopRatedMovie> = TopRatedMovie.fetchRequest()
-        do {
-            let moviesCoreData = try context.fetch(fetchRequest)
-            var movies: [Movie] = []
-            for movieCoreData in moviesCoreData {
-                let movie = Movie(
-                    id: Int(movieCoreData.id),
-                    overview: movieCoreData.overview ?? "",
-                    posterPath: movieCoreData.posterPath ?? "",
-                    releaseDate: movieCoreData.releaseDate ?? "",
-                    title: movieCoreData.title ?? "",
-                    voteAverage: movieCoreData.voteAverage,
-                    voteCount: movieCoreData.voteCount
-                )
-                movies.append(movie)
-            }
-            return movies
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return nil
-        }
+    private func getData<T: NSManagedObject>(entityName: String, type: T.Type) -> [T]? {
+        guard let context = getContext() else { return nil }
+        let fetchRequest = NSFetchRequest<T>(entityName: entityName)
+        let data = try? context.fetch(fetchRequest)
+        return data
     }
 
-    private func getPopularMovie(context: NSManagedObjectContext) -> [Movie]? {
-        let fetchRequest: NSFetchRequest<PopularMovie> = PopularMovie.fetchRequest()
-        do {
-            let moviesCoreData = try context.fetch(fetchRequest)
-            var movies: [Movie] = []
-            for movieCoreData in moviesCoreData {
-                let movie = Movie(
-                    id: Int(movieCoreData.id),
-                    overview: movieCoreData.overview ?? "",
-                    posterPath: movieCoreData.posterPath ?? "",
-                    releaseDate: movieCoreData.releaseDate ?? "",
-                    title: movieCoreData.title ?? "",
-                    voteAverage: movieCoreData.voteAverage,
-                    voteCount: movieCoreData.voteCount
-                )
-                movies.append(movie)
-            }
-            return movies
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return nil
+    private func getMovies(popularMovies: [PopularMovie]?) -> [Movie]? {
+        guard let popularMovies = popularMovies else { return nil }
+        var movies: [Movie] = []
+        for popularMovie in popularMovies {
+            let movie = Movie(
+                id: Int(popularMovie.id),
+                overview: popularMovie.overview ?? "",
+                posterPath: popularMovie.posterPath ?? "",
+                releaseDate: popularMovie.releaseDate ?? "",
+                title: popularMovie.title ?? "",
+                voteAverage: popularMovie.voteAverage,
+                voteCount: popularMovie.voteCount
+            )
+            movies.append(movie)
         }
+        return movies
     }
 
-    private func getUpcomingMovie(context: NSManagedObjectContext) -> [Movie]? {
-        let fetchRequest: NSFetchRequest<UpcomingMovie> = UpcomingMovie.fetchRequest()
-        do {
-            let moviesCoreData = try context.fetch(fetchRequest)
-            var movies: [Movie] = []
-            for movieCoreData in moviesCoreData {
-                let movie = Movie(
-                    id: Int(movieCoreData.id),
-                    overview: movieCoreData.overview ?? "",
-                    posterPath: movieCoreData.posterPath ?? "",
-                    releaseDate: movieCoreData.releaseDate ?? "",
-                    title: movieCoreData.title ?? "",
-                    voteAverage: movieCoreData.voteAverage,
-                    voteCount: movieCoreData.voteCount
-                )
-                movies.append(movie)
-            }
-            return movies
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return nil
+    private func getMovies(topRatedMovies: [TopRatedMovie]?) -> [Movie]? {
+        guard let topRatedMovies = topRatedMovies else { return nil }
+        var movies: [Movie] = []
+        for topRatedMovie in topRatedMovies {
+            let movie = Movie(
+                id: Int(topRatedMovie.id),
+                overview: topRatedMovie.overview ?? "",
+                posterPath: topRatedMovie.posterPath ?? "",
+                releaseDate: topRatedMovie.releaseDate ?? "",
+                title: topRatedMovie.title ?? "",
+                voteAverage: topRatedMovie.voteAverage,
+                voteCount: topRatedMovie.voteCount
+            )
+            movies.append(movie)
         }
+        return movies
+    }
+
+    private func getMovies(upcomingMovies: [UpcomingMovie]?) -> [Movie]? {
+        guard let upcomingMovies = upcomingMovies else { return nil }
+        var movies: [Movie] = []
+        for upcomingMovie in upcomingMovies {
+            let movie = Movie(
+                id: Int(upcomingMovie.id),
+                overview: upcomingMovie.overview ?? "",
+                posterPath: upcomingMovie.posterPath ?? "",
+                releaseDate: upcomingMovie.releaseDate ?? "",
+                title: upcomingMovie.title ?? "",
+                voteAverage: upcomingMovie.voteAverage,
+                voteCount: upcomingMovie.voteCount
+            )
+            movies.append(movie)
+        }
+        return movies
     }
 
     private func saveTopRatedMovie(movies: [Movie], context: NSManagedObjectContext) {
