@@ -40,14 +40,14 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     func fetchMovies() {
         listMoviesState?(.loading)
-        if let coreDataMovies = coreDataService.getData(category: currentCategoryMovies) {
+        if let coreDataMovies = coreDataService.getMovieData(category: currentCategoryMovies) {
             listMoviesState?(.success(coreDataMovies))
         }
         networkService.fetchMovies(categoryMovies: currentCategoryMovies) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(movies):
-                self.coreDataService.saveData(category: self.currentCategoryMovies, movies: movies)
+                self.coreDataService.saveMovieData(category: self.currentCategoryMovies, movies: movies)
                 self.listMoviesState?(.success(movies))
             case let .failure(error):
                 self.listMoviesState?(.failure(error))

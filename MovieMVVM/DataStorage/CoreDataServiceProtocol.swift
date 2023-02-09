@@ -5,6 +5,6 @@ import Foundation
 
 /// Протокол работы с CoreData
 protocol CoreDataServiceProtocol {
-    func saveData(category: CategoryMovies, movies: [Movie])
-    func getData(category: CategoryMovies) -> [Movie]?
+    func saveMovieData(category: CategoryMovies, movies: [Movie])
+    func getMovieData(category: CategoryMovies) -> [Movie]?
 }

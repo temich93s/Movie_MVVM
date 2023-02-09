@@ -8,7 +8,7 @@ import UIKit
 final class CoreDataService: CoreDataServiceProtocol {
     // MARK: - Public Methods
 
-    func saveData(category: CategoryMovies, movies: [Movie]) {
+    func saveMovieData(category: CategoryMovies, movies: [Movie]) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -27,7 +27,7 @@ final class CoreDataService: CoreDataServiceProtocol {
         }
     }
 
-    func getData(category: CategoryMovies) -> [Movie]? {
+    func getMovieData(category: CategoryMovies) -> [Movie]? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let context = appDelegate.persistentContainer.viewContext
         switch category {
