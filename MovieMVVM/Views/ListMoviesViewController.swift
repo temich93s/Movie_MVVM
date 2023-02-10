@@ -104,6 +104,8 @@ final class ListMoviesViewController: UIViewController {
                 self.listMoviesViewModel.uploadApiKey(key)
             }
         }
+        listMoviesViewModel.checkApiKey()
+        listMoviesViewModel.fetchMovies()
     }
 
     @available(*, unavailable)
