@@ -104,8 +104,6 @@ final class ListMoviesViewController: UIViewController {
                 self.listMoviesViewModel.uploadApiKey(key)
             }
         }
-        listMoviesViewModel.checkApiKey()
-        listMoviesViewModel.fetchMovies()
     }
 
     @available(*, unavailable)
@@ -165,6 +163,7 @@ final class ListMoviesViewController: UIViewController {
         addSubview()
         setupConstraint()
         setupRefreshControl()
+        listMoviesViewModel.checkApiKey()
     }
 
     private func addSubview() {

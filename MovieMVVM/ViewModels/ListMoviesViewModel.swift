@@ -67,6 +67,8 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
 
     func uploadApiKey(_ key: String) {
         keychainService.save(key, forKey: .apiKey)
+        networkService.setupAPIKey(key)
+        fetchMovies()
     }
 
     func setupCategory(tag: Int) {
