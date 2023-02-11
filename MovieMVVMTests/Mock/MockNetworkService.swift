@@ -6,6 +6,16 @@ import UIKit
 
 // Мок сетевого сервиса
 final class MockNetworkService: NetworkServiceProtocol {
+    // MARK: - Private Constants
+
+    private enum Constants {
+        static let mockPencilText = "pencil"
+        static let emptyText = ""
+        static let zeroNumberInt = 0
+        static let zeroNumberDouble = 0.0
+        static let idNumber = 0
+    }
+
     // MARK: - Public Properties
 
     var apiKey: String?
@@ -13,15 +23,15 @@ final class MockNetworkService: NetworkServiceProtocol {
     // MARK: - Private Properties
 
     private let mockMovies = [Movie(
-        id: 0,
-        overview: "",
-        posterPath: "pencil",
-        releaseDate: "",
-        title: "",
-        voteAverage: 0,
-        voteCount: 0
+        id: Constants.zeroNumberInt,
+        overview: Constants.emptyText,
+        posterPath: Constants.mockPencilText,
+        releaseDate: Constants.emptyText,
+        title: Constants.emptyText,
+        voteAverage: Constants.zeroNumberDouble,
+        voteCount: Constants.zeroNumberDouble
     )]
-    private let mockSimilarMovies = [SimilarMovie(posterPath: "pencil")]
+    private let mockSimilarMovies = [SimilarMovie(posterPath: Constants.mockPencilText)]
 
     // MARK: - Public Methods
 
@@ -33,7 +43,7 @@ final class MockNetworkService: NetworkServiceProtocol {
     }
 
     func fetchSimilarMovies(idMovie: Int, completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {
-        if idMovie == 0 {
+        if idMovie == Constants.idNumber {
             completion(.success(mockSimilarMovies))
         }
     }

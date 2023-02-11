@@ -10,7 +10,11 @@ final class NetworkServiceTests: XCTestCase {
     // MARK: - Private Constants
 
     private enum Constants {
-        static let mockApiKeyText = "8216e974d625f2a458a739c20007dcd6"
+        static let mockApiKeyText = "mockApiKeyText"
+        static let mockPosterPathText = "mockPosterPathText"
+        static let emptyText = ""
+        static let mockIdNumber = 505_642
+        static let timeoutNumber = 10.0
     }
 
     // MARK: - Private Properties
@@ -28,9 +32,9 @@ final class NetworkServiceTests: XCTestCase {
     }
 
     func testFetchMovies() {
-        let id = 505_642
+        let id = Constants.mockIdNumber
         networkService?.setupAPIKey(Constants.mockApiKeyText)
-        let expectation = XCTestExpectation(description: "")
+        let expectation = XCTestExpectation(description: Constants.emptyText)
         networkService?.fetchMovies(categoryMovies: .popular, completion: { result in
             switch result {
             case let .success(movies):
@@ -42,14 +46,14 @@ final class NetworkServiceTests: XCTestCase {
                 XCTAssertNotNil(error)
             }
         })
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: Constants.timeoutNumber)
     }
 
     func testFetchSimilarMovies() {
-        let posterPath = "/r12pZnSsCgLWrA4hXqdtprQ97uR.jpg"
+        let posterPath = Constants.mockPosterPathText
         networkService?.setupAPIKey(Constants.mockApiKeyText)
-        let expectation = XCTestExpectation(description: "")
-        networkService?.fetchSimilarMovies(idMovie: 315_162, completion: { result in
+        let expectation = XCTestExpectation(description: Constants.emptyText)
+        networkService?.fetchSimilarMovies(idMovie: Constants.mockIdNumber, completion: { result in
             switch result {
             case let .success(similarMovies):
                 expectation.fulfill()
@@ -60,6 +64,6 @@ final class NetworkServiceTests: XCTestCase {
                 XCTAssertNotNil(error)
             }
         })
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: Constants.timeoutNumber)
     }
 }

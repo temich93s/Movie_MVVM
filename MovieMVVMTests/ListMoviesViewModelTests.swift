@@ -11,6 +11,11 @@ final class ListMoviesViewModelTests: XCTestCase {
 
     private enum Constants {
         static let mockValue = "mock"
+        static let mockPencilText = "pencil"
+        static let emptyText = ""
+        static let zeroNumberInt = 0
+        static let zeroNumberDouble = 0.0
+        static let mockNumber = 8
     }
 
     // MARK: - Private Properties
@@ -20,22 +25,22 @@ final class ListMoviesViewModelTests: XCTestCase {
     private let mockKeychainService = MockKeychainService()
     private let mockCoreDataService = MockCoreDataService()
     private let mockMovies = [Movie(
-        id: 0,
-        overview: "",
-        posterPath: "pencil",
-        releaseDate: "",
-        title: "",
-        voteAverage: 0,
-        voteCount: 0
+        id: Constants.zeroNumberInt,
+        overview: Constants.emptyText,
+        posterPath: Constants.mockPencilText,
+        releaseDate: Constants.emptyText,
+        title: Constants.emptyText,
+        voteAverage: Constants.zeroNumberDouble,
+        voteCount: Constants.zeroNumberDouble
     )]
     private let mockMovie = Movie(
-        id: 0,
-        overview: "",
-        posterPath: "pencil",
-        releaseDate: "",
-        title: "",
-        voteAverage: 0,
-        voteCount: 0
+        id: Constants.zeroNumberInt,
+        overview: Constants.emptyText,
+        posterPath: Constants.mockPencilText,
+        releaseDate: Constants.emptyText,
+        title: Constants.emptyText,
+        voteAverage: Constants.zeroNumberDouble,
+        voteCount: Constants.zeroNumberDouble
     )
 
     private var listMoviesViewModel: ListMoviesViewModelProtocol?
@@ -83,7 +88,7 @@ final class ListMoviesViewModelTests: XCTestCase {
         listMoviesViewModel?.fetchData(movie: mockMovie, completion: { result in
             switch result {
             case let .success(mockData):
-                let data = Data(count: 8)
+                let data = Data(count: Constants.mockNumber)
                 XCTAssertEqual(mockData, data)
             case let .failure(error):
                 XCTAssertNotNil(error)

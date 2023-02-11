@@ -7,10 +7,17 @@ import XCTest
 
 /// Тестирование имедж сервис
 final class ImageServiceTests: XCTestCase {
+    // MARK: - Private Constants
+
+    private enum Constants {
+        static let mockPencilText = "pencil"
+        static let mockNumber = 8
+    }
+
     // MARK: - Private Properties
 
     let mockProxy = MockProxy()
-    let mockPath = "pencil"
+    let mockPath = Constants.mockPencilText
 
     var imageService: ImageService?
 
@@ -28,7 +35,7 @@ final class ImageServiceTests: XCTestCase {
         imageService?.loadImage(path: mockPath, completion: { result in
             switch result {
             case let .success(mockData):
-                let data = Data(count: 8)
+                let data = Data(count: Constants.mockNumber)
                 XCTAssertEqual(mockData, data)
             case let .failure(error):
                 XCTAssertNotNil(error)
@@ -36,7 +43,3 @@ final class ImageServiceTests: XCTestCase {
         })
     }
 }
-
-// func loadImage(path: String, completion: @escaping ((Result<Data, Error>) -> Void)) {
-//    proxy.loadImage(path: path, completion: completion)
-// }

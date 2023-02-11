@@ -11,6 +11,12 @@ final class DetailMovieViewModelTests: XCTestCase {
 
     private enum Constants {
         static let mockValue = "mock"
+        static let mockPencilText = "pencil"
+        static let emptyText = ""
+        static let zeroNumberInt = 0
+        static let zeroNumberDouble = 0.0
+        static let mockNumber = 8
+        static let indexPosterNumber = 0
     }
 
     // MARK: - Private Properties
@@ -19,15 +25,15 @@ final class DetailMovieViewModelTests: XCTestCase {
     private let mockImageService = MockImageService()
     private let mockKeychainService = MockKeychainService()
     private let mockCoreDataService = MockCoreDataService()
-    private let mockSimilarMovies = [SimilarMovie(posterPath: "pencil")]
+    private let mockSimilarMovies = [SimilarMovie(posterPath: Constants.mockPencilText)]
     private let mockMovie = Movie(
-        id: 0,
-        overview: "",
-        posterPath: "pencil",
-        releaseDate: "",
-        title: "",
-        voteAverage: 0,
-        voteCount: 0
+        id: Constants.zeroNumberInt,
+        overview: Constants.emptyText,
+        posterPath: Constants.mockPencilText,
+        releaseDate: Constants.emptyText,
+        title: Constants.emptyText,
+        voteAverage: Constants.zeroNumberDouble,
+        voteCount: Constants.zeroNumberDouble
     )
 
     private var detailMovieViewModel: DetailMovieViewModel?
@@ -53,7 +59,7 @@ final class DetailMovieViewModelTests: XCTestCase {
         detailMovieViewModel?.mainPosterCompletion = { result in
             switch result {
             case let .success(mockData):
-                let data = Data(count: 8)
+                let data = Data(count: Constants.mockNumber)
                 XCTAssertEqual(mockData, data)
             case let .failure(error):
                 XCTAssertNotNil(error)
@@ -66,13 +72,13 @@ final class DetailMovieViewModelTests: XCTestCase {
         let mockCompletion: ((Result<Data, Error>) -> Void)? = { result in
             switch result {
             case let .success(mockData):
-                let data = Data(count: 8)
+                let data = Data(count: Constants.mockNumber)
                 XCTAssertEqual(mockData, data)
             case let .failure(error):
                 XCTAssertNotNil(error)
             }
         }
-        detailMovieViewModel?.posterPath = "pencil"
+        detailMovieViewModel?.posterPath = Constants.mockPencilText
         detailMovieViewModel?.setupSimilarPosterCompetion(completion: mockCompletion)
         detailMovieViewModel?.fetchSimilarPosterData()
     }
@@ -94,7 +100,7 @@ final class DetailMovieViewModelTests: XCTestCase {
 
     func testSetupPoster() {
         detailMovieViewModel?.similarMovies = mockSimilarMovies
-        detailMovieViewModel?.setupPoster(index: 0)
+        detailMovieViewModel?.setupPoster(index: Constants.indexPosterNumber)
         XCTAssertEqual(mockSimilarMovies.first?.posterPath, mockSimilarMovies.first?.posterPath)
     }
 

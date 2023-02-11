@@ -7,16 +7,25 @@ import XCTest
 
 /// Тестирование сборщика модулей экрана со списоком фильмов
 final class DetailMovieBuilderTests: XCTestCase {
+    // MARK: - Private Constants
+
+    private enum Constants {
+        static let mockPencilText = "pencil"
+        static let emptyText = ""
+        static let zeroNumberInt = 0
+        static let zeroNumberDouble = 0.0
+    }
+
     // MARK: - Private Properties
 
     private let mockMovie = Movie(
-        id: 0,
-        overview: "",
-        posterPath: "pencil",
-        releaseDate: "",
-        title: "",
-        voteAverage: 0,
-        voteCount: 0
+        id: Constants.zeroNumberInt,
+        overview: Constants.emptyText,
+        posterPath: Constants.mockPencilText,
+        releaseDate: Constants.emptyText,
+        title: Constants.emptyText,
+        voteAverage: Constants.zeroNumberDouble,
+        voteCount: Constants.zeroNumberDouble
     )
 
     var detailMovieBuilder: DetailMovieBuilder?
