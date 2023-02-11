@@ -13,6 +13,8 @@ protocol DetailMovieViewModelProtocol {
     var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)? { get set }
     var similarPosterCompletion: ((Result<Data, Error>) -> Void)? { get set }
     var mainPosterCompletion: ((Result<Data, Error>) -> Void)? { get set }
+    var uploadApiKeyCompletion: VoidHandler? { get set }
+    var reloadCollection: VoidHandler? { get set }
 
     // MARK: - Public Methods
 
@@ -21,4 +23,6 @@ protocol DetailMovieViewModelProtocol {
     func setupSimilarPosterCompetion(completion: ((Result<Data, Error>) -> Void)?)
     func fetchSimilarMovies()
     func setupPoster(index: Int)
+    func uploadApiKey(_ key: String)
+    func checkApiKey()
 }

@@ -130,7 +130,7 @@ final class DetailMovieViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private var detailMovieViewModel: DetailMovieViewModel
+    private var detailMovieViewModel: DetailMovieViewModelProtocol
     private lazy var heightSimilarMovieCollectionView = similarMovieCollectionView.heightAnchor
         .constraint(equalToConstant: 0)
 

@@ -21,7 +21,7 @@ final class ListMoviesViewModel: ListMoviesViewModelProtocol {
     // MARK: - Initializers
 
     init(
-        networkService: NetworkService,
+        networkService: NetworkServiceProtocol,
         imageService: ImageServiceProtocol,
         keychainService: KeychainServiceProtocol,
         coreDataService: CoreDataServiceProtocol
