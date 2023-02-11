@@ -1,5 +1,5 @@
 // NetworkServiceProtocol.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import Foundation
 
@@ -7,4 +7,5 @@ import Foundation
 protocol NetworkServiceProtocol {
     func fetchMovies(categoryMovies: CategoryMovies, completion: @escaping (Result<[Movie], Error>) -> Void)
     func fetchSimilarMovies(idMovie: Int, completion: @escaping ((Result<[SimilarMovie], Error>) -> Void))
+    func setupAPIKey(_ apiKey: String)
 }

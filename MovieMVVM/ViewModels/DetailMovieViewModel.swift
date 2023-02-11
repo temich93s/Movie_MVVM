@@ -1,5 +1,5 @@
 // DetailMovieViewModel.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import Foundation
 
@@ -13,17 +13,29 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)?
     var similarPosterCompletion: ((Result<Data, Error>) -> Void)?
     var mainPosterCompletion: ((Result<Data, Error>) -> Void)?
+    var uploadApiKeyCompletion: VoidHandler?
+    var reloadCollection: VoidHandler?
 
     // MARK: - Private Properties
 
     private var networkService: NetworkServiceProtocol
     private var imageService: ImageServiceProtocol
+    private var keychainService: KeychainServiceProtocol
+    private var coreDataService: CoreDataServiceProtocol
 
     // MARK: - Initializers
 
-    init(networkService: NetworkService, imageService: ImageServiceProtocol, movie: Movie) {
+    init(
+        networkService: NetworkService,
+        imageService: ImageServiceProtocol,
+        keychainService: KeychainServiceProtocol,
+        coreDataService: CoreDataServiceProtocol,
+        movie: Movie
+    ) {
         self.networkService = networkService
         self.imageService = imageService
+        self.keychainService = keychainService
+        self.coreDataService = coreDataService
         self.movie = movie
     }
 
@@ -40,6 +52,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     }
 
     func fetchSimilarMovies() {
+        loadSimilarMovies()
         guard let similarMoviesCompletion = similarMoviesCompletion else { return }
         networkService.fetchSimilarMovies(idMovie: movie.id) { [weak self] result in
             guard let self = self else { return }
@@ -47,6 +60,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
                 switch result {
                 case let .success(similarMovies):
                     self.similarMovies = similarMovies
+                    self.coreDataService.saveSimilarMovie(id: self.movie.id, similarMovie: similarMovies)
                     similarMoviesCompletion(result)
                 case .failure:
                     similarMoviesCompletion(result)
@@ -62,5 +76,23 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
 
     func setupSimilarPosterCompetion(completion: ((Result<Data, Error>) -> Void)?) {
         similarPosterCompletion = completion
+    }
+
+    func checkApiKey() {
+        guard let apiKey = keychainService.get(forKey: .apiKey) else {
+            uploadApiKeyCompletion?()
+            return
+        }
+        networkService.setupAPIKey(apiKey)
+    }
+
+    func uploadApiKey(_ key: String) {
+        keychainService.save(key, forKey: .apiKey)
+    }
+
+    private func loadSimilarMovies() {
+        guard let similarMovies = coreDataService.getSimilarMovie(id: movie.id) else { return }
+        self.similarMovies = similarMovies
+        reloadCollection?()
     }
 }

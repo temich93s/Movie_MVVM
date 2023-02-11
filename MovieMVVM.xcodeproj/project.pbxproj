@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA3715EE299468A200B9E97D /* CoreDataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */; };
 		AA4AF4EE2906938B00236B5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF4ED2906938B00236B5C /* AppDelegate.swift */; };
 		AA4AF4F02906938B00236B5C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF4EF2906938B00236B5C /* SceneDelegate.swift */; };
 		AA4AF4F52906938B00236B5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4AF4F32906938B00236B5C /* Main.storyboard */; };
@@ -16,6 +17,11 @@
 		AA4AF50B2906B4B100236B5C /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF50A2906B4B100236B5C /* MovieTableViewCell.swift */; };
 		AA4AF50D2906C66D00236B5C /* DetailMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF50C2906C66D00236B5C /* DetailMovieViewController.swift */; };
 		AA4AF5102906D1FB00236B5C /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF50F2906D1FB00236B5C /* MovieList.swift */; };
+		AA75A9B62993CEA400C8FE79 /* KeychainKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA75A9B52993CEA400C8FE79 /* KeychainKey.swift */; };
+		AA75A9B92993CF2500C8FE79 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA75A9B82993CF2500C8FE79 /* CoreDataService.swift */; };
+		AA75A9BC2993CF4700C8FE79 /* MovieMVVM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA75A9BA2993CF4700C8FE79 /* MovieMVVM.xcdatamodeld */; };
+		AA75A9BE2993D1D100C8FE79 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA75A9BD2993D1D100C8FE79 /* KeychainService.swift */; };
+		AA75A9C02993D1E100C8FE79 /* KeychainServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA75A9BF2993D1E100C8FE79 /* KeychainServiceProtocol.swift */; };
 		AA9051312992006B0071405D /* DetailMovieBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9051302992006B0071405D /* DetailMovieBuilder.swift */; };
 		AA9051332992007C0071405D /* DetailMovieBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9051322992007C0071405D /* DetailMovieBuilderProtocol.swift */; };
 		AA905135299200C50071405D /* ListMoviesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA905134299200C50071405D /* ListMoviesBuilder.swift */; };
@@ -44,6 +50,7 @@
 		AAFBFED12993A0DF003E6E51 /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFBFED02993A0DF003E6E51 /* Typealias.swift */; };
 		AAFBFED32993A175003E6E51 /* ImageAPIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFBFED22993A175003E6E51 /* ImageAPIServiceProtocol.swift */; };
 		AAFBFED52993A2F1003E6E51 /* FileManagerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFBFED42993A2F1003E6E51 /* FileManagerServiceProtocol.swift */; };
+		E95625FDC4CE535FC89FB76E /* Pods_MovieMVVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6AD3194C494A1C10C03856F /* Pods_MovieMVVM.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServiceProtocol.swift; sourceTree = "<group>"; };
 		AA4AF4EA2906938B00236B5C /* MovieMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4AF4ED2906938B00236B5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA4AF4EF2906938B00236B5C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +79,11 @@
 		AA4AF50A2906B4B100236B5C /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		AA4AF50C2906C66D00236B5C /* DetailMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieViewController.swift; sourceTree = "<group>"; };
 		AA4AF50F2906D1FB00236B5C /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
+		AA75A9B52993CEA400C8FE79 /* KeychainKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainKey.swift; sourceTree = "<group>"; };
+		AA75A9B82993CF2500C8FE79 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		AA75A9BB2993CF4700C8FE79 /* MovieMVVM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieMVVM.xcdatamodel; sourceTree = "<group>"; };
+		AA75A9BD2993D1D100C8FE79 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		AA75A9BF2993D1E100C8FE79 /* KeychainServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceProtocol.swift; sourceTree = "<group>"; };
 		AA9051302992006B0071405D /* DetailMovieBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieBuilder.swift; sourceTree = "<group>"; };
 		AA9051322992007C0071405D /* DetailMovieBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieBuilderProtocol.swift; sourceTree = "<group>"; };
 		AA905134299200C50071405D /* ListMoviesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoviesBuilder.swift; sourceTree = "<group>"; };
@@ -99,6 +112,9 @@
 		AAFBFED02993A0DF003E6E51 /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 		AAFBFED22993A175003E6E51 /* ImageAPIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAPIServiceProtocol.swift; sourceTree = "<group>"; };
 		AAFBFED42993A2F1003E6E51 /* FileManagerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerServiceProtocol.swift; sourceTree = "<group>"; };
+		AB7186B193685F17E93CEE61 /* Pods-MovieMVVM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieMVVM.release.xcconfig"; path = "Target Support Files/Pods-MovieMVVM/Pods-MovieMVVM.release.xcconfig"; sourceTree = "<group>"; };
+		BCA05D35C6C04E84D81ECC66 /* Pods-MovieMVVM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieMVVM.debug.xcconfig"; path = "Target Support Files/Pods-MovieMVVM/Pods-MovieMVVM.debug.xcconfig"; sourceTree = "<group>"; };
+		F6AD3194C494A1C10C03856F /* Pods_MovieMVVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieMVVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,17 +122,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E95625FDC4CE535FC89FB76E /* Pods_MovieMVVM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29524DCF8E425BECB178C269 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F6AD3194C494A1C10C03856F /* Pods_MovieMVVM.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AA4AF4E12906938B00236B5C = {
 			isa = PBXGroup;
 			children = (
 				AA4AF4EC2906938B00236B5C /* MovieMVVM */,
 				AA4AF4EB2906938B00236B5C /* Products */,
+				E1CBA1F9CF9A5E1288842EDA /* Pods */,
+				29524DCF8E425BECB178C269 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,13 +158,14 @@
 		AA4AF4EC2906938B00236B5C /* MovieMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				AA75A9B72993CF0F00C8FE79 /* DataStorage */,
 				AAFBFECF2993A0D2003E6E51 /* Typealias */,
 				AA90516229925A1B0071405D /* Extensions */,
 				AA9051552992070F0071405D /* Proxy */,
 				AA90512F299200590071405D /* Builders */,
 				AA905138299200ED0071405D /* Coordinators */,
 				AA90513F2992013F0071405D /* Enums */,
-				AA905142299201800071405D /* Network */,
+				AA905142299201800071405D /* Services */,
 				AA905147299201C60071405D /* ViewModels */,
 				AA4AF50E2906D19B00236B5C /* Models */,
 				AA4AF5092906B49300236B5C /* Views */,
@@ -173,6 +201,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		AA75A9B72993CF0F00C8FE79 /* DataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				AA75A9B82993CF2500C8FE79 /* CoreDataService.swift */,
+				AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */,
+				AA75A9BA2993CF4700C8FE79 /* MovieMVVM.xcdatamodeld */,
+			);
+			path = DataStorage;
+			sourceTree = "<group>";
+		};
 		AA90512F299200590071405D /* Builders */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,17 +237,20 @@
 			children = (
 				AA9051402992015A0071405D /* CategoryMovies.swift */,
 				AA905160299244920071405D /* ListMoviesState.swift */,
+				AA75A9B52993CEA400C8FE79 /* KeychainKey.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
 		};
-		AA905142299201800071405D /* Network */ = {
+		AA905142299201800071405D /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				AA905143299201A10071405D /* NetworkServiceProtocol.swift */,
 				AA905145299201B20071405D /* NetworkService.swift */,
+				AA75A9BD2993D1D100C8FE79 /* KeychainService.swift */,
+				AA75A9BF2993D1E100C8FE79 /* KeychainServiceProtocol.swift */,
 			);
-			path = Network;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		AA905147299201C60071405D /* ViewModels */ = {
@@ -253,6 +294,15 @@
 			path = Typealias;
 			sourceTree = "<group>";
 		};
+		E1CBA1F9CF9A5E1288842EDA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BCA05D35C6C04E84D81ECC66 /* Pods-MovieMVVM.debug.xcconfig */,
+				AB7186B193685F17E93CEE61 /* Pods-MovieMVVM.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,12 +310,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA4AF4FE2906938D00236B5C /* Build configuration list for PBXNativeTarget "MovieMVVM" */;
 			buildPhases = (
+				7676A03028F5EE5CC0AAAFBE /* [CP] Check Pods Manifest.lock */,
 				AA4AF4E62906938B00236B5C /* Sources */,
 				AA4AF4E72906938B00236B5C /* Frameworks */,
 				AA4AF4E82906938B00236B5C /* Resources */,
 				AA4AF501290697A600236B5C /* Copy Files */,
 				AA4AF502290697B500236B5C /* SwiftFormat */,
 				AA4AF503290699CD00236B5C /* SwiftLint */,
+				84BB91113FB7C9C5983481B3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -323,6 +375,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7676A03028F5EE5CC0AAAFBE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MovieMVVM-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84BB91113FB7C9C5983481B3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieMVVM/Pods-MovieMVVM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MovieMVVM/Pods-MovieMVVM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MovieMVVM/Pods-MovieMVVM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AA4AF502290697B500236B5C /* SwiftFormat */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -382,6 +473,7 @@
 				AA90515F299209BD0071405D /* FileManagerService.swift in Sources */,
 				AA9051332992007C0071405D /* DetailMovieBuilderProtocol.swift in Sources */,
 				AA90514B299201E20071405D /* ListMoviesViewModelProtocol.swift in Sources */,
+				AA75A9B92993CF2500C8FE79 /* CoreDataService.swift in Sources */,
 				AA90515D299208210071405D /* ImageService.swift in Sources */,
 				AA9051312992006B0071405D /* DetailMovieBuilder.swift in Sources */,
 				AA90515B299207CD0071405D /* ImageAPIService.swift in Sources */,
@@ -389,15 +481,20 @@
 				AA4AF4EE2906938B00236B5C /* AppDelegate.swift in Sources */,
 				AA905137299200D60071405D /* ListMoviesBuilderProtocol.swift in Sources */,
 				AAFBFED12993A0DF003E6E51 /* Typealias.swift in Sources */,
+				AA75A9B62993CEA400C8FE79 /* KeychainKey.swift in Sources */,
 				AA4AF4F02906938B00236B5C /* SceneDelegate.swift in Sources */,
 				AA4AF50B2906B4B100236B5C /* MovieTableViewCell.swift in Sources */,
+				AA75A9BC2993CF4700C8FE79 /* MovieMVVM.xcdatamodeld in Sources */,
 				AA905149299201D50071405D /* ListMoviesViewModel.swift in Sources */,
 				AA9051572992072D0071405D /* Proxy.swift in Sources */,
+				AA3715EE299468A200B9E97D /* CoreDataServiceProtocol.swift in Sources */,
 				AA4AF5082906A53900236B5C /* ListMoviesViewController.swift in Sources */,
 				AAFBFED32993A175003E6E51 /* ImageAPIServiceProtocol.swift in Sources */,
 				AA90513E2992012F0071405D /* MovieCoordinator.swift in Sources */,
+				AA75A9BE2993D1D100C8FE79 /* KeychainService.swift in Sources */,
 				AAAD6AAF290958CB009C9672 /* SimilarMovieCollectionViewCell.swift in Sources */,
 				AA905135299200C50071405D /* ListMoviesBuilder.swift in Sources */,
+				AA75A9C02993D1E100C8FE79 /* KeychainServiceProtocol.swift in Sources */,
 				AAFBFED52993A2F1003E6E51 /* FileManagerServiceProtocol.swift in Sources */,
 				AA90513C299201200071405D /* ApplicationCoordinator.swift in Sources */,
 			);
@@ -541,6 +638,7 @@
 		};
 		AA4AF4FF2906938D00236B5C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCA05D35C6C04E84D81ECC66 /* Pods-MovieMVVM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -569,6 +667,7 @@
 		};
 		AA4AF5002906938D00236B5C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB7186B193685F17E93CEE61 /* Pods-MovieMVVM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -617,6 +716,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AA75A9BA2993CF4700C8FE79 /* MovieMVVM.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AA75A9BB2993CF4700C8FE79 /* MovieMVVM.xcdatamodel */,
+			);
+			currentVersion = AA75A9BB2993CF4700C8FE79 /* MovieMVVM.xcdatamodel */;
+			path = MovieMVVM.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = AA4AF4E22906938B00236B5C /* Project object */;
 }

@@ -1,5 +1,5 @@
 // ListMoviesViewController.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import UIKit
 
@@ -10,6 +10,8 @@ final class ListMoviesViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
+        static let apiTitleText = "Ключ API"
+        static let apiMessageText = "Введите ключ API"
         static let systemPinkColorName = "SystemPinkColor"
         static let systemLightGrayColorName = "SystemLightGrayColor"
         static let moviesText = "Movies"
@@ -91,8 +93,19 @@ final class ListMoviesViewController: UIViewController {
 
     init(listMovieViewModel: ListMoviesViewModel) {
         listMoviesViewModel = listMovieViewModel
-        listMoviesViewModel.fetchMovies()
         super.init(nibName: nil, bundle: nil)
+        listMoviesViewModel.uploadApiKeyCompletion = { [weak self] in
+            guard let self = self else { return }
+            self.showAlert(
+                title: Constants.apiTitleText,
+                message: Constants.apiMessageText,
+                actionTitle: Constants.okText
+            ) { key in
+                self.listMoviesViewModel.uploadApiKey(key)
+            }
+        }
+        listMoviesViewModel.checkApiKey()
+        listMoviesViewModel.fetchMovies()
     }
 
     @available(*, unavailable)
@@ -152,6 +165,7 @@ final class ListMoviesViewController: UIViewController {
         addSubview()
         setupConstraint()
         setupRefreshControl()
+        listMoviesViewModel.checkApiKey()
     }
 
     private func addSubview() {

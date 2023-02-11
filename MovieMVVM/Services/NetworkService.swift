@@ -1,5 +1,5 @@
 // NetworkService.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import UIKit
 
@@ -8,7 +8,7 @@ final class NetworkService: NetworkServiceProtocol {
     // MARK: - Constants
 
     private enum Constants {
-        static let apiKeyQueryText = "api_key=8216e974d625f2a458a739c20007dcd6"
+        static let apiKeyText = "api_key="
         static let languageQueryText = "&language=ru-RU"
         static let pageQueryText = "&page=1"
         static let themoviedbQueryText = "https://api.themoviedb.org/3/movie/"
@@ -18,6 +18,10 @@ final class NetworkService: NetworkServiceProtocol {
         static let upcomingQueryText = "upcoming?"
         static let emptyText = ""
     }
+
+    // MARK: - Private Properties
+
+    private var apiKey: String?
 
     // MARK: - Public Methods
 
@@ -31,8 +35,9 @@ final class NetworkService: NetworkServiceProtocol {
         case .upcoming:
             currentCategoryMovies = Constants.upcomingQueryText
         }
+        guard let apiKey = apiKey else { return }
         let urlString =
-            "\(Constants.themoviedbQueryText)\(currentCategoryMovies)\(Constants.apiKeyQueryText)" +
+            "\(Constants.themoviedbQueryText)\(currentCategoryMovies)\(Constants.apiKeyText)\(apiKey)" +
             "\(Constants.languageQueryText)\(Constants.pageQueryText)\(Constants.pageQueryText)"
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -54,9 +59,10 @@ final class NetworkService: NetworkServiceProtocol {
     }
 
     func fetchSimilarMovies(idMovie: Int, completion: @escaping ((Result<[SimilarMovie], Error>) -> Void)) {
+        guard let apiKey = apiKey else { return }
         let urlString =
             "\(Constants.themoviedbQueryText)\(idMovie)\(Constants.similarQueryText)" +
-            "\(Constants.apiKeyQueryText)\(Constants.languageQueryText)\(Constants.pageQueryText)"
+            "\(Constants.apiKeyText)\(apiKey)\(Constants.languageQueryText)\(Constants.pageQueryText)"
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             if error == nil {
@@ -71,5 +77,9 @@ final class NetworkService: NetworkServiceProtocol {
                 }
             }
         }.resume()
+    }
+
+    func setupAPIKey(_ apiKey: String) {
+        self.apiKey = apiKey
     }
 }

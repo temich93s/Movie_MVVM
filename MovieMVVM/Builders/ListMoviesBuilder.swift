@@ -1,5 +1,5 @@
 // ListMoviesBuilder.swift
-// Copyright © RoadMap. All rights reserved.
+// Copyright © SolovevAA. All rights reserved.
 
 import UIKit
 
@@ -11,9 +11,16 @@ final class ListMoviesBuilder: ListMoviesBuilderProtocol {
         let networkService = NetworkService()
         let fileManager = FileManagerService()
         let imageAPIService = ImageAPIService()
+        let keychainService = KeychainService()
+        let coreDataService = CoreDataService()
         let proxy = Proxy(fileManager: fileManager, imageAPIService: imageAPIService)
         let imageService = ImageService(proxy: proxy)
-        let listMoviesViewModel = ListMoviesViewModel(networkService: networkService, imageService: imageService)
+        let listMoviesViewModel = ListMoviesViewModel(
+            networkService: networkService,
+            imageService: imageService,
+            keychainService: keychainService,
+            coreDataService: coreDataService
+        )
         let listMoviesViewController = ListMoviesViewController(listMovieViewModel: listMoviesViewModel)
         return listMoviesViewController
     }
