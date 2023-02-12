@@ -31,7 +31,7 @@ final class FileManagerServiceTests: XCTestCase {
         fileManagerService = nil
     }
 
-    func testLoadImage() {
+    func testSaveAndLoadImage() {
         let mockData = Data(count: Constants.mockNumber)
         fileManagerService?.saveImageData(path: Constants.mockPencilText, data: mockData)
         let data = fileManagerService?.loadImageData(path: Constants.mockPencilText)
