@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA3715EE299468A200B9E97D /* CoreDataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */; };
+		AA435102299864C70082234B /* FileManagerServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA435101299864C70082234B /* FileManagerServiceTests.swift */; };
 		AA4AF4EE2906938B00236B5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF4ED2906938B00236B5C /* AppDelegate.swift */; };
 		AA4AF4F02906938B00236B5C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4AF4EF2906938B00236B5C /* SceneDelegate.swift */; };
 		AA4AF4F52906938B00236B5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4AF4F32906938B00236B5C /* Main.storyboard */; };
@@ -101,6 +102,7 @@
 
 /* Begin PBXFileReference section */
 		AA3715ED299468A200B9E97D /* CoreDataServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServiceProtocol.swift; sourceTree = "<group>"; };
+		AA435101299864C70082234B /* FileManagerServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerServiceTests.swift; sourceTree = "<group>"; };
 		AA4AF4EA2906938B00236B5C /* MovieMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4AF4ED2906938B00236B5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA4AF4EF2906938B00236B5C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 				AAE63D262996653D00EEECF7 /* NetworkServiceTests.swift */,
 				AA624DB7299675F40085639C /* BaseCoordinatorTests.swift */,
 				AA624DBB2996832A0085639C /* ImageServiceTests.swift */,
+				AA435101299864C70082234B /* FileManagerServiceTests.swift */,
 			);
 			path = MovieMVVMTests;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 				AAE63D1D29961C7600EEECF7 /* MockCoreDataService.swift in Sources */,
 				AAE63D132996166300EEECF7 /* ListMoviesViewModelTests.swift in Sources */,
 				AAE63D232996635600EEECF7 /* ListMoviesBuilderTests.swift in Sources */,
+				AA435102299864C70082234B /* FileManagerServiceTests.swift in Sources */,
 				AAE63D1B29961C0700EEECF7 /* MockKeychainService.swift in Sources */,
 				AAE63D212996612E00EEECF7 /* DetailMovieBuilderTests.swift in Sources */,
 				AAE63D252996643B00EEECF7 /* KeychainServiceTests.swift in Sources */,
