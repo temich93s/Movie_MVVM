@@ -4,7 +4,7 @@
 import XCTest
 
 final class MovieMVVMUITestsLaunchTests: XCTestCase {
-    // MARK: - Constants
+    // MARK: - Private enum
 
     private enum Constants {
         static let launchScreenText = "Launch Screen"
