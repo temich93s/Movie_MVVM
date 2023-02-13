@@ -157,7 +157,7 @@ final class DetailMovieViewController: UIViewController {
     // MARK: - Private Methods
 
     private func initView() {
-        detailMovieViewModel.uploadApiKeyCompletion = { [weak self] in
+        detailMovieViewModel.uploadApiKeyHandler = { [weak self] in
             guard let self = self else { return }
             self.showAlert(
                 title: Constants.apiTitleText,
@@ -168,7 +168,7 @@ final class DetailMovieViewController: UIViewController {
             }
         }
         detailMovieViewModel.checkApiKey()
-        detailMovieViewModel.reloadCollection = { [weak self] in
+        detailMovieViewModel.reloadHandler = { [weak self] in
             guard let self = self else { return }
             self.similarMovieCollectionView.reloadData()
         }

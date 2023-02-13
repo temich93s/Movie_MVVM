@@ -16,10 +16,10 @@ final class FileManagerServiceTests: XCTestCase {
 
     // MARK: - Private Properties
 
-    let mockProxy = MockProxy()
-    let mockPath = Constants.mockPencilText
+    private let mockProxy = MockProxy()
+    private let mockPath = Constants.mockPencilText
 
-    var fileManagerService: FileManagerService?
+    private var fileManagerService: FileManagerService?
 
     // MARK: - Public Methods
 

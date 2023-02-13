@@ -13,8 +13,8 @@ protocol DetailMovieViewModelProtocol {
     var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)? { get set }
     var similarPosterCompletion: ((Result<Data, Error>) -> Void)? { get set }
     var mainPosterCompletion: ((Result<Data, Error>) -> Void)? { get set }
-    var uploadApiKeyCompletion: VoidHandler? { get set }
-    var reloadCollection: VoidHandler? { get set }
+    var uploadApiKeyHandler: VoidHandler? { get set }
+    var reloadHandler: VoidHandler? { get set }
 
     // MARK: - Public Methods
 

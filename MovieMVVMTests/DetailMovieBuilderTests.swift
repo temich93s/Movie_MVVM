@@ -28,7 +28,7 @@ final class DetailMovieBuilderTests: XCTestCase {
         voteCount: Constants.zeroNumberDouble
     )
 
-    var detailMovieBuilder: DetailMovieBuilder?
+    private var detailMovieBuilder: DetailMovieBuilder?
 
     // MARK: - Public Methods
 

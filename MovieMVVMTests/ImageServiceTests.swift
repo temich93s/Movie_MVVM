@@ -16,10 +16,10 @@ final class ImageServiceTests: XCTestCase {
 
     // MARK: - Private Properties
 
-    let mockProxy = MockProxy()
-    let mockPath = Constants.mockPencilText
+    private let mockProxy = MockProxy()
+    private let mockPath = Constants.mockPencilText
 
-    var imageService: ImageService?
+    private var imageService: ImageService?
 
     // MARK: - Public Methods
 
