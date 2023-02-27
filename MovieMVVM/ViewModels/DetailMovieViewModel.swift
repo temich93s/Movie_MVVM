@@ -13,8 +13,8 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     var similarMoviesCompletion: ((Result<[SimilarMovie], Error>) -> Void)?
     var similarPosterCompletion: ((Result<Data, Error>) -> Void)?
     var mainPosterCompletion: ((Result<Data, Error>) -> Void)?
-    var uploadApiKeyCompletion: VoidHandler?
-    var reloadCollection: VoidHandler?
+    var uploadApiKeyHandler: VoidHandler?
+    var reloadHandler: VoidHandler?
 
     // MARK: - Private Properties
 
@@ -26,7 +26,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     // MARK: - Initializers
 
     init(
-        networkService: NetworkService,
+        networkService: NetworkServiceProtocol,
         imageService: ImageServiceProtocol,
         keychainService: KeychainServiceProtocol,
         coreDataService: CoreDataServiceProtocol,
@@ -80,7 +80,7 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
 
     func checkApiKey() {
         guard let apiKey = keychainService.get(forKey: .apiKey) else {
-            uploadApiKeyCompletion?()
+            uploadApiKeyHandler?()
             return
         }
         networkService.setupAPIKey(apiKey)
@@ -93,6 +93,6 @@ final class DetailMovieViewModel: DetailMovieViewModelProtocol {
     private func loadSimilarMovies() {
         guard let similarMovies = coreDataService.getSimilarMovie(id: movie.id) else { return }
         self.similarMovies = similarMovies
-        reloadCollection?()
+        reloadHandler?()
     }
 }

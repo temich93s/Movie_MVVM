@@ -10,6 +10,7 @@ final class ListMoviesViewController: UIViewController {
     // MARK: - Constants
 
     private enum Constants {
+        static let accessibilityIdentifier = "MovieListTableView"
         static let apiTitleText = "Ключ API"
         static let apiMessageText = "Введите ключ API"
         static let systemPinkColorName = "SystemPinkColor"
@@ -166,6 +167,11 @@ final class ListMoviesViewController: UIViewController {
         setupConstraint()
         setupRefreshControl()
         listMoviesViewModel.checkApiKey()
+        setupListMoviesTableView()
+    }
+
+    private func setupListMoviesTableView() {
+        listMoviesTableView.accessibilityIdentifier = Constants.accessibilityIdentifier
     }
 
     private func addSubview() {
