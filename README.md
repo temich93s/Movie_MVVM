@@ -19,6 +19,7 @@
 - **URLSession + JSONDecoder**
 - **CocoaPods**
 - **KeychainSwift**
+- **UI/Unit-test**
 
 https://user-images.githubusercontent.com/88254863/228431471-b378d6e7-82c4-4b7f-b2c6-f843f9f21da6.mp4
 
